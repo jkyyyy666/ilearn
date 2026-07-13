@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+﻿import React, { useState, useMemo, useCallback } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useWords } from "../context/WordContext";
 import EmptyState from "../components/EmptyState";
@@ -33,6 +33,11 @@ export default function KnownWordsPage() {
       (w.ipa || "").toLowerCase().includes(q)
     );
   }, [knownWords, searchQuery]);
+
+  const handleRemoveKnown = useCallback((word) => {
+    words.removeKnownWord(lang, word.id);
+    addToast(`已移除「${isChinese ? word.chinese : word.english}」`, "info");
+  }, [words, lang, isChinese, addToast]);
 
   const handleClearKnown = () => {
     words.clearKnownWords(lang);
@@ -103,6 +108,21 @@ export default function KnownWordsPage() {
                     )}
                     {!isRevealed && <div style={{ marginTop: 6, fontSize: 12, color: "var(--text-tertiary)", opacity: 0.6 }}>👆 点击查看详情</div>}
                   </div>
+                  <button
+                    className="btn btn-sm btn-secondary"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveKnown(word);
+                    }}
+                    style={{
+                      whiteSpace: "nowrap",
+                      alignSelf: "flex-start",
+                      marginLeft: 8,
+                      flexShrink: 0,
+                    }}
+                  >
+                    ✕ 移除
+                  </button>
                 </div>
               </div>
             );
@@ -121,3 +141,4 @@ export default function KnownWordsPage() {
     </div>
   );
 }
+
