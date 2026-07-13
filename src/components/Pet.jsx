@@ -1,8 +1,24 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./pet.css";
 
+/** 鼓励语列表 */
+const CHEER_MESSAGES = [
+  "主人太棒了！🎉",
+  "好厉害呀！💪",
+  "继续加油哦！🌟",
+  "今天也进步了呢！📚",
+  "你真的很努力！✨",
+  "真了不起呀！🌈",
+  "太优秀了吧！🏆",
+  "离目标又近一步！🎯",
+  "主人最厉害了！💖",
+  "每天都在一起进步呢！🌻",
+  "被主人的努力感动了 😢",
+  "好想和主人一直学习！🤗",
+];
+
 /**
- * 团子小精灵 - 点击会逃跑
+ * 团子小精灵 - 点击会逃跑，学习会鼓励
  */
 export default function Pet() {
   const [position, setPosition] = useState(() => 15 + Math.random() * 55);
@@ -13,6 +29,8 @@ export default function Pet() {
   const [isScared, setIsScared] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [sweats, setSweats] = useState([]);
+  const [bubble, setBubble] = useState(null); // { text, key }
+  const bubbleTimeout = useRef(null);
 
   const checkFedToday = useCallback(() => {
     try {
@@ -41,7 +59,22 @@ export default function Pet() {
     return () => clearInterval(interval);
   }, [isScared]);
 
-  // 喂食
+  // ===== 弹气泡 =====
+  const showBubble = useCallback((text) => {
+    if (bubbleTimeout.current) clearTimeout(bubbleTimeout.current);
+    setBubble({ text, key: Date.now() });
+    bubbleTimeout.current = setTimeout(() => {
+      setBubble(null);
+    }, 3000);
+  }, []);
+
+  // 随机鼓励
+  const randomCheer = useCallback(() => {
+    const msg = CHEER_MESSAGES[Math.floor(Math.random() * CHEER_MESSAGES.length)];
+    showBubble(msg);
+  }, [showBubble]);
+
+  // 监听喂食（学习完成）
   useEffect(() => {
     const handleFeed = () => {
       const emojis = ["❤️", "💖", "💕", "✨", "⭐"];
@@ -54,13 +87,38 @@ export default function Pet() {
       setHearts(prev => [...prev, ...newHearts]);
       setIsHungry(false);
       setIsHappy(true);
+      // 弹出鼓励
+      randomCheer();
       setTimeout(() => setIsHappy(false), 3000);
       setTimeout(() => setHearts([]), 2600);
     };
     window.addEventListener("pet-feed", handleFeed);
     return () => window.removeEventListener("pet-feed", handleFeed);
-  }, []);
+  }, [randomCheer]);
 
+  // 监听自定义消息
+  useEffect(() => {
+    const handleMessage = (e) => {
+      showBubble(e.detail || "主人加油！🌟");
+    };
+    window.addEventListener("pet-message", handleMessage);
+    return () => window.removeEventListener("pet-message", handleMessage);
+  }, [showBubble]);
+
+  // 定时互动 - 如果今天学习了，偶尔夸夸主人
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!checkFedToday()) return; // 没学习就不打扰
+      if (bubble) return; // 已经在说话就不重复
+      // 15% 概率触发
+      if (Math.random() < 0.15) {
+        randomCheer();
+      }
+    }, 45000); // 每45秒检查一次
+    return () => clearInterval(interval);
+  }, [checkFedToday, bubble, randomCheer]);
+
+  // 定时检查饥饿
   useEffect(() => {
     const interval = setInterval(() => { setIsHungry(!checkFedToday()); }, 300000);
     return () => clearInterval(interval);
@@ -69,11 +127,10 @@ export default function Pet() {
   // ===== 点击逃跑 =====
   const handleClick = useCallback(() => {
     if (isScared) return;
-
     setIsScared(true);
     setIsRunning(true);
+    showBubble("呀！被发现了 😰");
 
-    // 生成汗滴
     const newSweats = Array.from({ length: 3 }, (_, i) => ({
       id: Date.now() + i,
       x: 30 + Math.random() * 40,
@@ -81,16 +138,14 @@ export default function Pet() {
     }));
     setSweats(prev => [...prev, ...newSweats]);
 
-    // 快速逃跑到随机位置
-    const newX = 5 + Math.random() * 78;
-    setPosition(newX);
+    setPosition(5 + Math.random() * 78);
 
     setTimeout(() => {
       setIsScared(false);
       setIsRunning(false);
       setSweats([]);
     }, 1200);
-  }, [isScared]);
+  }, [isScared, showBubble]);
 
   const imgClass = isRunning ? "pet-img scared"
     : isWalking ? "pet-img walking"
@@ -106,6 +161,16 @@ export default function Pet() {
     <div className={wrapperClass} style={{ left: position + "%" }}>
       <div className="pet-canvas" onClick={handleClick}>
 
+        {/* 对话气泡 */}
+        {bubble && (
+          <div className="pet-bubble" key={bubble.key}
+            style={{
+              animation: "bubbleIn 0.3s ease-out forwards",
+            }}>
+            <div className="pet-bubble-inner">{bubble.text}</div>
+          </div>
+        )}
+
         {hearts.map(h => (
           <span key={h.id} className="pet-heart"
             style={{ left: h.x + "%", animationDelay: h.delay + "ms" }}>
@@ -120,12 +185,7 @@ export default function Pet() {
           </span>
         ))}
 
-        <img
-          src={imgUrl}
-          className={imgClass}
-          alt="小精灵"
-          draggable={false}
-        />
+        <img src={imgUrl} className={imgClass} alt="小精灵" draggable={false} />
       </div>
     </div>
   );

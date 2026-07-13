@@ -181,6 +181,12 @@ export default function QuizPage() {
     const total = knownCount + unknownCount;
     const rate = total > 0 ? Math.round((knownCount / total) * 100) : 0;
 
+  // 告诉小精灵测验结果
+  useEffect(() => {
+    const msg = rate >= 80 ? "主人太棒了！🎉" : rate >= 50 ? "不错哟，继续加油！💪" : "没关系，再试一次吧！🌈";
+    window.dispatchEvent(new CustomEvent("pet-message", { detail: msg }));
+  }, []);
+
     return (
       <div className="quiz-container">
         <div
