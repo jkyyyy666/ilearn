@@ -37,17 +37,23 @@ export default function QuizPage() {
       addToast("请先收藏单词再开始测验", "warning");
       return;
     }
-    // 打乱收藏单词
+    // 打乱收藏单词，排除已认识的
     const knownWords = words.getKnownWords(lang);
     const knownIds = new Set(knownWords.map(w => w.id));
     const shuffled = [...favWords].filter(w => !knownIds.has(w.id)).sort(() => Math.random() - 0.5);
+
+    if (shuffled.length === 0) {
+      addToast("所有收藏单词都已认识啦！🎉 去添加新词吧", "success");
+      return;
+    }
+
     setQuizWords(shuffled);
     setCurrentIndex(0);
     setKnownCount(0);
     setUnknownCount(0);
     setIsFinished(false);
     setLastAction(null);
-  }, [favWords, addToast]);
+  }, [favWords, words, lang, addToast]);
 
   // 点击卡片切换显示释义
   const toggleReveal = useCallback(() => {
