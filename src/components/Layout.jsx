@@ -46,7 +46,7 @@ export default function Layout() {
               gap: 8,
             }}
           >
-            🀄 婉❤️学习日记
+            婉❤️学习日记
           </NavLink>
 
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
