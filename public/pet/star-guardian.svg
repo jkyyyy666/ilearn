@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#E8F4FF"/>
+      <stop offset="50%" stop-color="#D0E8FF"/>
+      <stop offset="100%" stop-color="#B0D4FF"/>
+    </radialGradient>
+    <radialGradient id="skinGrad" cx="45%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FFF5F0"/>
+      <stop offset="60%" stop-color="#FFE4D6"/>
+      <stop offset="100%" stop-color="#F5C8B8"/>
+    </radialGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A1040"/>
+      <stop offset="35%" stop-color="#2D1B69"/>
+      <stop offset="70%" stop-color="#4A2D8A"/>
+      <stop offset="100%" stop-color="#6B4FB0"/>
+    </linearGradient>
+    <radialGradient id="eyeGrad" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#2D1B69"/>
+      <stop offset="40%" stop-color="#1A1040"/>
+      <stop offset="100%" stop-color="#0A0520"/>
+    </radialGradient>
+    <linearGradient id="skirtGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="40%" stop-color="#F0F4FF"/>
+      <stop offset="100%" stop-color="#D8E4F8"/>
+    </linearGradient>
+    <linearGradient id="wingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(180,210,255,0.45)"/>
+      <stop offset="50%" stop-color="rgba(220,235,255,0.25)"/>
+      <stop offset="100%" stop-color="rgba(200,220,255,0.08)"/>
+    </linearGradient>
+    <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.7"/>
+      <stop offset="30%" stop-color="#FFE44D" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFF8C4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blushGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,130,150,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,130,150,0)"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(150,170,200,0.2)"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="url(#bgGrad)" rx="20"/>
+  <circle cx="200" cy="250" r="180" fill="rgba(255,255,255,0.12)"/>
+  <g opacity="0.35">
+    <circle cx="50" cy="60" r="2" fill="#FFD700"/><circle cx="120" cy="30" r="1.5" fill="#B8D4FF"/>
+    <circle cx="320" cy="50" r="2" fill="#FFD700"/><circle cx="360" cy="120" r="1.5" fill="#FFB8D8"/>
+    <circle cx="30" cy="180" r="1" fill="#B8D4FF"/><circle cx="370" cy="200" r="1.5" fill="#FFD700"/>
+    <circle cx="80" cy="350" r="1" fill="#B8D4FF"/><circle cx="340" cy="380" r="1.5" fill="#FFD700"/>
+    <circle cx="200" cy="25" r="1.5" fill="#FFD700"/><circle cx="280" cy="460" r="1.5" fill="#FFD700"/>
+  </g>
+  <g filter="url(#shadow)" opacity="0.55">
+    <path d="M170,220 Q70,155 35,195 Q65,205 85,185 Q55,225 45,255 Q75,245 105,225 Q75,265 85,285 Q115,255 155,235Z" fill="url(#wingGrad)" stroke="rgba(180,210,255,0.25)" stroke-width="1"/>
+    <path d="M230,220 Q330,155 365,195 Q335,205 315,185 Q345,225 355,255 Q325,245 295,225 Q325,265 315,285 Q285,255 245,235Z" fill="url(#wingGrad)" stroke="rgba(180,210,255,0.25)" stroke-width="1"/>
+  </g>
+  <g opacity="0.45">
+    <text x="70" y="220" font-size="13" fill="#FFD700">✦</text>
+    <text x="330" y="210" font-size="11" fill="#B8D4FF">✦</text>
+    <text x="50" y="270" font-size="9" fill="#FFB8D8">✦</text>
+    <text x="350" y="260" font-size="9" fill="#FFD700">✦</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="162" y="350" width="13" height="26" rx="6" fill="#FFE4D6"/>
+    <rect x="225" y="350" width="13" height="26" rx="6" fill="#FFE4D6"/>
+    <ellipse cx="168" cy="376" rx="9" ry="5" fill="#FFF" stroke="#D8E4F8" stroke-width="1"/>
+    <ellipse cx="232" cy="376" rx="9" ry="5" fill="#FFF" stroke="#D8E4F8" stroke-width="1"/>
+    <path d="M148,318 Q200,358 252,318 Q260,298 255,278 Q200,308 145,278 Q140,298 148,318Z" fill="url(#skirtGrad)" stroke="rgba(200,220,255,0.15)" stroke-width="1"/>
+    <path d="M155,313 Q200,338 245,313" fill="none" stroke="rgba(200,215,240,0.2)" stroke-width="1"/>
+    <text x="172" y="328" font-size="7" fill="rgba(200,220,255,0.35)">✦</text>
+    <text x="220" y="333" font-size="6" fill="rgba(180,200,255,0.35)">✧</text>
+    <text x="195" y="338" font-size="5" fill="rgba(255,215,0,0.25)">✦</text>
+    <rect x="176" y="282" width="48" height="28" rx="10" fill="#FFE8DE"/>
+  </g>
+  <g filter="url(#shadow)">
+    <path d="M170,290 Q148,300 153,322 Q156,330 164,326" fill="none" stroke="#FFE4D6" stroke-width="13" stroke-linecap="round"/>
+    <path d="M230,290 Q252,300 247,322 Q244,330 236,326" fill="none" stroke="#FFE4D6" stroke-width="13" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#glow)">
+    <circle cx="200" cy="332" r="20" fill="url(#starGlow)"/>
+    <text x="200" y="339" text-anchor="middle" font-size="22" fill="#FFD700" opacity="0.85">★</text>
+  </g>
+  <g opacity="0.25">
+    <line x1="200" y1="308" x2="200" y2="298" stroke="#FFE44D" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="200" y1="356" x2="200" y2="366" stroke="#FFE44D" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="177" y1="332" x2="167" y2="332" stroke="#FFE44D" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="223" y1="332" x2="233" y2="332" stroke="#FFE44D" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="184" y1="315" x2="177" y2="308" stroke="#FFE44D" stroke-width="1" stroke-linecap="round"/>
+    <line x1="216" y1="315" x2="223" y2="308" stroke="#FFE44D" stroke-width="1" stroke-linecap="round"/>
+    <line x1="184" y1="349" x2="177" y2="356" stroke="#FFE44D" stroke-width="1" stroke-linecap="round"/>
+    <line x1="216" y1="349" x2="223" y2="356" stroke="#FFE44D" stroke-width="1" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#shadow)">
+    <ellipse cx="200" cy="190" rx="62" ry="22" fill="url(#hairGrad)" opacity="0.25"/>
+    <circle cx="200" cy="200" r="66" fill="url(#skinGrad)"/>
+    <ellipse cx="180" cy="180" rx="22" ry="8" fill="rgba(255,255,255,0.25)" transform="rotate(-15,180,180)"/>
+    <path d="M134,195 Q137,142 160,127 Q180,114 200,110 Q220,114 240,127 Q263,142 266,195 Q248,185 200,180 Q152,185 134,195Z" fill="url(#hairGrad)"/>
+    <path d="M152,157 Q180,130 218,130 Q228,132 232,136 Q200,122 162,142Z" fill="rgba(150,130,255,0.18)"/>
+    <path d="M157,200 Q162,172 176,162 Q190,154 200,152 Q210,154 224,162 Q238,172 243,200 Q228,190 200,188 Q172,190 157,200Z" fill="url(#hairGrad)"/>
+    <path d="M134,195 Q127,220 122,250 Q120,260 127,258 Q132,240 137,220 Q140,205 134,195Z" fill="url(#hairGrad)"/>
+    <path d="M266,195 Q273,220 278,250 Q280,260 273,258 Q268,240 263,220 Q260,205 266,195Z" fill="url(#hairGrad)"/>
+    <ellipse cx="176" cy="205" rx="14" ry="16" fill="url(#eyeGrad)"/>
+    <ellipse cx="174" cy="203" rx="11" ry="12" fill="none" stroke="rgba(180,180,255,0.12)" stroke-width="0.5"/>
+    <circle cx="171" cy="199" r="1.5" fill="rgba(200,200,255,0.35)"/>
+    <circle cx="181" cy="210" r="1" fill="rgba(255,200,255,0.25)"/>
+    <circle cx="171" cy="199" r="4.5" fill="rgba(255,255,255,0.85)"/>
+    <circle cx="180" cy="210" r="1.5" fill="rgba(255,255,255,0.35)"/>
+    <ellipse cx="224" cy="205" rx="14" ry="16" fill="url(#eyeGrad)"/>
+    <ellipse cx="222" cy="203" rx="11" ry="12" fill="none" stroke="rgba(180,180,255,0.12)" stroke-width="0.5"/>
+    <circle cx="219" cy="199" r="1.5" fill="rgba(200,200,255,0.35)"/>
+    <circle cx="229" cy="210" r="1" fill="rgba(255,200,255,0.25)"/>
+    <circle cx="219" cy="199" r="4.5" fill="rgba(255,255,255,0.85)"/>
+    <circle cx="228" cy="210" r="1.5" fill="rgba(255,255,255,0.35)"/>
+    <ellipse cx="153" cy="220" rx="11" ry="6" fill="url(#blushGrad)"/>
+    <ellipse cx="247" cy="220" rx="11" ry="6" fill="url(#blushGrad)"/>
+    <path d="M188,225 Q200,232 212,225" fill="none" stroke="#D4607A" stroke-width="2.3" stroke-linecap="round"/>
+    <g filter="url(#glow)">
+      <text x="240" y="150" text-anchor="middle" font-size="26" fill="#FFD700" opacity="0.85">⭐</text>
+    </g>
+    <g opacity="0.25">
+      <circle cx="240" cy="136" r="2.5" fill="#FFE44D"/>
+      <circle cx="250" cy="144" r="1.5" fill="#FFE44D"/>
+      <circle cx="232" cy="142" r="1.5" fill="#FFE44D"/>
+    </g>
+  </g>
+  <g opacity="0.4">
+    <circle cx="140" cy="280" r="2" fill="#FFD700"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="2s" repeatCount="indefinite"/></circle>
+    <circle cx="260" cy="260" r="1.5" fill="#B8D4FF"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="2.5s" repeatCount="indefinite"/></circle>
+    <circle cx="130" cy="350" r="1.5" fill="#FFB8D8"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="270" cy="380" r="2" fill="#FFD700"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="2.2s" repeatCount="indefinite"/></circle>
+  </g>
+</svg>
