@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
   // GitHub Pages 部署时需要设置 base
   // 如果部署到 https://<username>.github.io/<repo>/ 则 base: "/<repo>/"
-  // 如果部署到自定义域名或根路径，则 base: "/englearn/"
-  base: "/englearn/",
+  // 如果部署到自定义域名或根路径，则 base: "/ilearn/"
+  base: "/ilearn/",
   build: {
     outDir: "dist",
     sourcemap: false,
