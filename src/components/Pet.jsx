@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { calculateStreak, recordActivity } from "../utils/streak";
 import "./pet.css";
 
 /** 点击精灵时的互动语 */
@@ -100,14 +101,17 @@ export default function Pet() {
     // 延迟一下等页面加载完再打招呼
     const timer = setTimeout(() => {
       const hour = new Date().getHours();
-      let greeting = "主人，欢迎回家！🥰";
-      if (hour < 6) greeting = "这么晚还在学习，好努力呀！🌙";
-      else if (hour < 9) greeting = "主人早安！今天也要加油哦！☀️";
-      else if (hour < 12) greeting = "上午好呀主人！一起学习吧！📚";
-      else if (hour < 14) greeting = "主人中午好！吃饱了才有力气学习！🍚";
-      else if (hour < 18) greeting = "下午好主人！来学点新词吧！✨";
-      else if (hour < 21) greeting = "主人晚上好！今天学了多少呀？🌟";
-      else greeting = "主人辛苦了！要不要再复习一下？💪";
+      const streak = calculateStreak();
+      const streakMsg = streak > 0 ? " 已连续学习 " + streak + " 天啦🔥" : "";
+      let greeting = "主人，欢迎回家！" + streakMsg + "🥰";
+      if (hour < 6) greeting = "这么晚还在学习" + streakMsg + "，好努力呀！🌙";
+      else if (hour < 9) greeting = "主人早安" + streakMsg + "！今天也要加油哦！☀️";
+      else if (hour < 12) greeting = "上午好呀主人" + streakMsg + "！一起学习吧！📚";
+      else if (hour < 14) greeting = "主人中午好" + streakMsg + "！吃饱了才有力气学习！🍚";
+      else if (hour < 18) greeting = "下午好主人" + streakMsg + "！来学点新词吧！✨";
+      else if (hour < 21) greeting = "主人晚上好" + streakMsg + "！今天学了多少呀？🌟";
+      else greeting = "主人辛苦了" + streakMsg + "！要不要再复习一下？💪";
+      recordActivity();
       showBubble(greeting);
       setHasWelcomed(true);
     }, 1500);

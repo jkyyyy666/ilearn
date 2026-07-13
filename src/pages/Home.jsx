@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ToastContainer, { useToastManager } from "../components/Toast";
 import StarBackground from "../components/StarBackground";
+import { recordActivity, calculateStreak } from "../utils/streak";
 
 /**
  * 首页
@@ -11,9 +12,16 @@ export default function Home() {
   const navigate = useNavigate();
   const [toasts, setToasts] = useState([]);
   const { addToast } = useToastManager(setToasts);
+  const [streak, setStreak] = useState(() => calculateStreak());
   const [dailyGoal, setDailyGoal] = useState(() => {
     return parseInt(localStorage.getItem("cl_daily_goal") || "10");
   });
+
+  // 记录每日访问
+  useEffect(() => {
+    recordActivity();
+    setStreak(calculateStreak());
+  }, []);
 
   return (
     <>

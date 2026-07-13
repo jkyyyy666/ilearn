@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useWords } from "../context/WordContext";
 import ToastContainer, { useToastManager } from "../components/Toast";
+import { recordActivity } from "../utils/streak";
 import EmptyState from "../components/EmptyState";
 
 /**
@@ -80,6 +81,7 @@ export default function QuizPage() {
         setLastAction(null);
       } else {
         window.dispatchEvent(new CustomEvent("pet-feed"));
+        recordActivity();
         setIsFinished(true);
       }
     }, 400);
