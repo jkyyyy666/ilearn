@@ -39,7 +39,7 @@
   </defs>
 
   <!-- 浅色背景 -->
-  <rect width="400" height="500" fill="#F0F4FF" rx="20"/>
+  
 
   <!-- 底部阴影 -->
   <ellipse cx="200" cy="430" rx="70" ry="12" fill="url(#shadowGrad)">
