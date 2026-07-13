@@ -35,7 +35,7 @@ export default function Home() {
         {/* Logo 区域 */}
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <img
-            src="/bg/xinxin.jpg"
+            src={import.meta.env.BASE_URL + "bg/xinxin.jpg"}
             alt="星星人"
             style={{
               width: "200px",

@@ -15,7 +15,7 @@ export default function StarBackground() {
         height: "100%",
         zIndex: -1,
         pointerEvents: "none",
-        backgroundImage: "url(/bg/love.jpg)",
+        backgroundImage: "url(" + import.meta.env.BASE_URL + "bg/love.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
