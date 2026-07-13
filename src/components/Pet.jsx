@@ -22,7 +22,7 @@ const CHEER_MESSAGES = [
  * 团子小精灵 - 点击会逃跑，学习会鼓励
  */
 export default function Pet() {
-  const [position, setPosition] = useState(() => 15 + Math.random() * 55);
+  const [position, setPosition] = useState(() => 72 + Math.random() * 18);
   const [isHappy, setIsHappy] = useState(false);
   const [isHungry, setIsHungry] = useState(false);
   const [hearts, setHearts] = useState([]);
@@ -56,7 +56,7 @@ export default function Pet() {
     const walk = () => {
       if (isScared) return;
       setIsWalking(true);
-      setPosition(5 + Math.random() * 78);
+      setPosition(isHome ? 5 + Math.random() * 85 : 55 + Math.random() * 38);
       setTimeout(() => setIsWalking(false), 2800);
     };
     const interval = setInterval(walk, 10000 + Math.random() * 14000);
@@ -162,7 +162,7 @@ export default function Pet() {
     }));
     setSweats(prev => [...prev, ...newSweats]);
 
-    setPosition(5 + Math.random() * 78);
+    setPosition(isHome ? 5 + Math.random() * 85 : 55 + Math.random() * 38);
 
     setTimeout(() => {
       setIsScared(false);
@@ -183,7 +183,7 @@ export default function Pet() {
 
   return (
     <div className={wrapperClass} style={{ left: position + "%" }}>
-      <div className="pet-canvas" onClick={handleClick}>
+      <div className="pet-canvas" onClick={isHome ? handleClick : undefined} style={{ cursor: isHome ? "pointer" : "default" }}>
 
         {/* 对话气泡 */}
         {bubble && (
