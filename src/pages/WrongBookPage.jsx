@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+﻿import React, { useState, useMemo, useCallback } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useWords } from "../context/WordContext";
 import EmptyState from "../components/EmptyState";
@@ -53,8 +53,9 @@ export default function WrongBookPage() {
   // 标记该词已认识，从错题本移除
   const handleMarkKnown = useCallback(
     (word) => {
+      words.addKnownWord(lang, word);
       words.removeWrongWord(lang, word.id);
-      addToast(`已认识「${isChinese ? word.chinese : word.english}」，已从错题本移除`, "success");
+      addToast(`已认识「${isChinese ? word.chinese : word.english}」，已移至已认识列表`, "success");
     },
     [words, lang, isChinese, addToast]
   );
@@ -302,3 +303,4 @@ export default function WrongBookPage() {
     </div>
   );
 }
+
