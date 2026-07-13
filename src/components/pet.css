@@ -1,4 +1,4 @@
-/* ===== 星空小精灵 - 梦幻盲盒风 ===== */
+/* ===== 极简可爱小精灵 ===== */
 
 .pet-wrapper {
   position: fixed;
@@ -6,575 +6,216 @@
   z-index: 1;
   pointer-events: none;
   user-select: none;
-  transition: left 6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: left 5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .pet-canvas {
   position: relative;
-  width: 110px;
-  height: 150px;
+  width: 80px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  filter: drop-shadow(0 8px 32px rgba(100, 120, 255, 0.2));
 }
 
-/* ===== 全身光晕 ===== */
-.pet-glow {
-  position: absolute;
-  inset: -15px;
-  border-radius: 50% 50% 40% 40%;
-  background: radial-gradient(ellipse, rgba(150, 180, 255, 0.12) 0%, transparent 70%);
-  animation: petAura 4s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* ===== 🔵 圆圆的大脑袋 ===== */
+/* 大圆头 */
 .pet-head {
-  width: 70px;
-  height: 68px;
+  width: 60px;
+  height: 58px;
   border-radius: 50%;
-  background: radial-gradient(circle at 45% 40%, #FFF5F0 0%, #FFE8E0 40%, #FDD8C8 100%);
+  background: linear-gradient(160deg, #FFF5F0, #FFE0D4);
   position: relative;
-  z-index: 4;
-  animation: headFloat 3.5s ease-in-out infinite;
+  z-index: 3;
+  animation: float 3s ease-in-out infinite;
   box-shadow:
-    0 8px 30px rgba(130, 150, 255, 0.2),
-    0 0 20px rgba(180, 200, 255, 0.1),
-    inset 0 -6px 16px rgba(200, 160, 140, 0.15),
-    inset 0 4px 12px rgba(255, 255, 255, 0.3);
+    0 4px 20px rgba(200, 160, 140, 0.2),
+    inset 0 -4px 10px rgba(200, 160, 140, 0.1);
 }
 
-/* 脸部高光 - 树脂质感 */
-.pet-head::before {
+/* 头顶小高光 */
+.pet-head::after {
   content: '';
   position: absolute;
-  top: 6px;
-  left: 12px;
-  width: 22px;
-  height: 14px;
+  top: 8px;
+  left: 16px;
+  width: 16px;
+  height: 10px;
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(255,255,255,0.5) 0%, transparent 70%);
-  z-index: 6;
+  background: rgba(255,255,255,0.35);
 }
 
-/* ===== 💇 星空渐变头发 ===== */
-/* 后面的大波浪头发 */
-.pet-hair-back {
-  position: absolute;
-  top: -10px;
-  left: -8px;
-  right: -8px;
-  bottom: 20px;
-  z-index: 2;
-  pointer-events: none;
-}
-.pet-hair-back::before,
-.pet-hair-back::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-}
-.pet-hair-back::before {
-  top: -2px;
-  left: -6px;
-  width: 58px;
-  height: 52px;
-  background: linear-gradient(160deg, #1A1040 0%, #2D1B69 30%, #4A2D8A 60%, #6B4FB0 100%);
-  transform: rotate(-15deg);
-  border-radius: 50% 50% 30% 70% / 60% 60% 40% 40%;
-  box-shadow: inset -4px -4px 12px rgba(0,0,0,0.3), inset 4px 4px 8px rgba(120, 80, 200, 0.2);
-}
-.pet-hair-back::after {
-  top: 0px;
-  right: -6px;
-  width: 54px;
-  height: 48px;
-  background: linear-gradient(200deg, #1A1040 0%, #3A2070 40%, #5A3A9A 70%, #7A5ABA 100%);
-  transform: rotate(15deg);
-  border-radius: 50% 50% 70% 30% / 60% 60% 40% 40%;
-  box-shadow: inset -4px -4px 12px rgba(0,0,0,0.3), inset 4px 4px 8px rgba(120, 80, 200, 0.2);
-}
-
-/* 刘海 - 覆盖在额头上 */
-.pet-bangs {
-  position: absolute;
-  top: -2px;
-  left: 0;
-  right: 0;
-  height: 32px;
-  z-index: 5;
-  overflow: hidden;
-}
-.pet-bangs::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 42px;
-  background: linear-gradient(180deg, #1A1040 0%, #3A2070 50%, #5A3A9A 80%, transparent 100%);
-  border-radius: 50%;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
-}
-
-/* 刘海的高光 */
-.pet-bangs::after {
-  content: '';
-  position: absolute;
-  top: 4px;
-  left: 20%;
-  width: 30%;
-  height: 8px;
-  background: linear-gradient(90deg, transparent, rgba(150, 130, 255, 0.3), transparent);
-  border-radius: 50%;
-}
-
-/* ===== 👁️ 银河般闪耀的大眼睛 ===== */
+/* 眼睛 - 简单黑点 */
 .pet-eyes {
   position: absolute;
-  top: 22px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 16px;
-  z-index: 7;
+  gap: 14px;
+  z-index: 4;
 }
-
 .pet-eye {
-  position: relative;
-  width: 16px;
-  height: 18px;
+  width: 10px;
+  height: 11px;
+  background: #2D1B36;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #1A1040 0%, #2D1B69 30%, #1A0A30 100%);
-  box-shadow:
-    0 2px 6px rgba(0,0,0,0.15),
-    inset 0 0 6px rgba(100, 80, 200, 0.3);
-  animation: eyeBlink 4s ease-in-out infinite;
-  overflow: hidden;
+  animation: blink 4s ease-in-out infinite;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* 银河星芒 - 从瞳孔向外辐射 */
-.pet-eye::before {
-  content: '';
-  position: absolute;
-  inset: 1px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 40% 35%, rgba(200, 180, 255, 0.6) 0%, rgba(100, 80, 200, 0.2) 2px, transparent 5px),
-    radial-gradient(circle at 60% 60%, rgba(180, 220, 255, 0.4) 0%, transparent 3px),
-    radial-gradient(circle at 30% 70%, rgba(255, 200, 255, 0.3) 0%, transparent 2px);
-  z-index: 1;
-}
-
-/* 主高光 - 白色大光点 */
-.pet-eye::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  right: 3px;
-  width: 5px;
-  height: 5px;
-  background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(200, 220, 255, 0.6) 50%, transparent 100%);
-  border-radius: 50%;
-  z-index: 2;
-  box-shadow: 0 0 4px rgba(255,255,255,0.3);
-}
-
-/* 第二高光 - 小光点 */
-.pet-eye .eye-sparkle2 {
-  position: absolute;
-  bottom: 4px;
-  left: 2px;
-  width: 2.5px;
-  height: 2.5px;
-  background: rgba(255,255,255,0.5);
-  border-radius: 50%;
-  z-index: 2;
-}
-
-/* 闭眼 */
 .pet-eye.blink {
   animation: none;
-  height: 2.5px;
-  width: 14px;
-  margin-top: 8px;
-  background: #2D1B69;
-  border-radius: 4px;
-  box-shadow: none;
+  height: 2px;
+  width: 9px;
+  margin-top: 5px;
+  border-radius: 3px;
 }
-.pet-eye.blink::before,
-.pet-eye.blink::after,
-.pet-eye.blink .eye-sparkle2 { display: none; }
 
-/* 开心弯月眼 */
 .pet-eye.happy {
-  height: 3px;
-  width: 16px;
-  margin-top: 8px;
-  background: #2D1B69;
-  border-radius: 4px;
-  box-shadow: none;
+  height: 2.5px;
+  width: 11px;
+  margin-top: 5px;
+  border-radius: 3px;
 }
-.pet-eye.happy::before,
-.pet-eye.happy::after,
-.pet-eye.happy .eye-sparkle2 { display: none; }
 
-/* ===== 🥰 腮红 ===== */
+/* 腮红 - 两个小粉团 */
 .pet-cheek {
   position: absolute;
-  bottom: 16px;
-  width: 12px;
-  height: 7px;
+  bottom: 14px;
+  width: 9px;
+  height: 5px;
   border-radius: 50%;
-  z-index: 6;
-  animation: cheekGlow 3s ease-in-out infinite;
+  z-index: 3;
 }
-.pet-cheek.left {
-  left: 4px;
-  background: radial-gradient(ellipse, rgba(255, 130, 150, 0.25) 0%, transparent 80%);
-}
-.pet-cheek.right {
-  right: 4px;
-  background: radial-gradient(ellipse, rgba(255, 130, 150, 0.25) 0%, transparent 80%);
-}
+.pet-cheek.left { left: 5px; background: rgba(255, 130, 150, 0.25); }
+.pet-cheek.right { right: 5px; background: rgba(255, 130, 150, 0.25); }
 
-/* ===== 😊 微笑 ===== */
+/* 嘴巴 - 小弧线 */
 .pet-mouth {
   position: absolute;
-  bottom: 12px;
+  bottom: 13px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 6;
-}
-.pet-mouth svg { display: block; }
-
-/* ===== ⭐ 星星发饰 ===== */
-.pet-hairpin {
-  position: absolute;
-  top: -14px;
-  right: 6px;
-  font-size: 18px;
-  z-index: 8;
-  animation: hairpinGlow 2.5s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6))
-          drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+  z-index: 4;
 }
 
-/* ===== 👗 白色短裙身体 ===== */
+/* 小身体 */
 .pet-body {
-  position: relative;
-  margin-top: -3px;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* 小上身 */
-.pet-torso {
   width: 28px;
-  height: 16px;
-  background: linear-gradient(180deg, #FFE8E0 0%, #FFD8CC 100%);
-  border-radius: 6px 6px 2px 2px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-}
-
-/* 白色蓬蓬裙 */
-.pet-skirt {
-  width: 40px;
-  height: 20px;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F0F4FF 50%, #E0E8F8 100%);
-  border-radius: 4px 4px 14px 14px;
-  margin-top: -1px;
+  height: 18px;
+  background: linear-gradient(180deg, #FFE0D4, #F0C8B8);
+  border-radius: 4px 4px 8px 8px;
+  margin-top: -3px;
   position: relative;
-  box-shadow:
-    0 4px 16px rgba(150, 170, 255, 0.15),
-    inset 0 4px 8px rgba(255,255,255,0.5),
-    inset 0 -2px 4px rgba(180, 200, 230, 0.2);
-}
-
-/* 裙摆小花边 */
-.pet-skirt::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: -1px;
-  right: -1px;
-  height: 5px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(200, 220, 255, 0.2) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-/* 裙子上星光点缀 */
-.pet-skirt .skirt-star {
-  position: absolute;
-  font-size: 5px;
-  color: rgba(180, 200, 255, 0.5);
-}
-.pet-skirt .skirt-star.s1 { top: 3px; left: 6px; animation: sparkleTwinkle 2s ease-in-out infinite; }
-.pet-skirt .skirt-star.s2 { top: 5px; right: 8px; animation: sparkleTwinkle 2s ease-in-out infinite 0.6s; }
-.pet-skirt .skirt-star.s3 { bottom: 4px; left: 15px; animation: sparkleTwinkle 2s ease-in-out infinite 1.2s; }
-
-/* ===== 🤚 小手臂 ===== */
-.pet-arms {
-  position: absolute;
-  top: -6px;
-  left: 0;
-  right: 0;
   z-index: 2;
-}
-.pet-arm {
-  position: absolute;
-  width: 10px;
-  height: 16px;
-  border-radius: 5px;
-  background: linear-gradient(180deg, #FFE8E0, #FDD8C8);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-}
-.pet-arm.left {
-  left: -9px;
-  transform: rotate(12deg);
-  border-radius: 5px 5px 3px 8px;
-  animation: armSwingL 3s ease-in-out infinite;
-}
-.pet-arm.right {
-  right: -9px;
-  transform: rotate(-12deg);
-  border-radius: 5px 5px 8px 3px;
-  animation: armSwingR 3s ease-in-out infinite;
+  box-shadow: 0 2px 8px rgba(200, 160, 140, 0.15);
 }
 
-/* ===== 🦶 小脚 ===== */
-.pet-legs {
+/* 小脚 */
+.pet-feet {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   margin-top: -1px;
-  z-index: 2;
+  z-index: 1;
 }
-.pet-leg {
+.pet-foot {
   width: 9px;
-  height: 7px;
-  background: linear-gradient(180deg, #FFE8E0, #F0C8B8);
+  height: 6px;
+  background: #F0C8B8;
   border-radius: 0 0 5px 5px;
 }
-.pet-leg.walk { animation: legWalk 0.6s ease-in-out infinite; }
-.pet-leg.walk-r { animation: legWalk 0.6s ease-in-out infinite 0.3s; }
+.pet-foot.walk { animation: footWalk 0.5s ease-in-out infinite; }
+.pet-foot.walk-r { animation: footWalk 0.5s ease-in-out infinite 0.25s; }
 
-/* ===== 🌙 月亮装饰 ===== */
-.pet-moon {
+/* 头顶小星星发饰 */
+.pet-star {
   position: absolute;
-  top: -4px;
-  right: -12px;
-  font-size: 14px;
-  z-index: 1;
-  opacity: 0.7;
-  animation: moonDrift 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 6px rgba(200, 200, 255, 0.3));
-}
-
-/* ===== ⭐ 环绕小星星 ===== */
-.pet-star-deco {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
-}
-.pet-star-deco.d1 { top: -18px; left: 0; font-size: 8px; color: #FFD700; animation: starOrbit1 5s ease-in-out infinite; }
-.pet-star-deco.d2 { top: 10px; left: -16px; font-size: 6px; color: #B8D4FF; animation: starOrbit2 4s ease-in-out infinite 0.5s; }
-.pet-star-deco.d3 { bottom: 30px; left: -14px; font-size: 7px; color: #FFD700; animation: starOrbit3 5.5s ease-in-out infinite 1s; }
-.pet-star-deco.d4 { top: -8px; right: -22px; font-size: 6px; color: #FFB8D8; animation: starOrbit4 4.5s ease-in-out infinite 0.3s; }
-.pet-star-deco.d5 { bottom: 20px; right: -16px; font-size: 8px; color: #B8D4FF; animation: starOrbit5 5s ease-in-out infinite 1.5s; }
-.pet-star-deco.d6 { bottom: -6px; left: 20px; font-size: 5px; color: #FFD700; animation: starOrbit6 3.5s ease-in-out infinite 0.8s; }
-
-/* 星星尾巴光晕 */
-.pet-star-deco::after {
-  content: '';
-  position: absolute;
-  top: 50%;
+  top: -16px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200%;
-  height: 200%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
-  pointer-events: none;
+  transform: translateX(-50%);
+  font-size: 16px;
+  z-index: 5;
+  animation: starSpin 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
 }
 
-/* ===== 💕 心形特效 ===== */
+/* 喂食心形 */
 .pet-heart {
   position: absolute;
   font-size: 12px;
   opacity: 0;
-  animation: heartBurst 2.2s ease-out forwards;
+  animation: heartUp 1.8s ease-out forwards;
   z-index: 10;
   pointer-events: none;
-  filter: drop-shadow(0 2px 6px rgba(255, 80, 150, 0.3));
 }
 
-/* ====== 动画 ====== */
-
-@keyframes headFloat {
+/* 动画 */
+@keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
 
-@keyframes petAura {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.08); }
+@keyframes blink {
+  0%, 96%, 100% { height: 11px; width: 10px; margin-top: 0; }
+  97% { height: 2px; width: 9px; margin-top: 5px; }
 }
 
-@keyframes eyeBlink {
-  0%, 96%, 100% { height: 18px; width: 16px; margin-top: 0; }
-  97% { height: 2.5px; width: 14px; margin-top: 8px; }
+@keyframes starSpin {
+  0%, 100% { transform: translateX(-50%) rotate(0deg) scale(1); }
+  50% { transform: translateX(-50%) rotate(15deg) scale(1.15); }
 }
 
-@keyframes cheekGlow {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.8; }
-}
-
-@keyframes armSwingL {
-  0%, 100% { transform: rotate(12deg); }
-  50% { transform: rotate(18deg); }
-}
-@keyframes armSwingR {
-  0%, 100% { transform: rotate(-12deg); }
-  50% { transform: rotate(-18deg); }
-}
-
-/* 星星环绕轨道 */
-@keyframes starOrbit1 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
-  25% { transform: translate(4px, -6px) scale(1.3); opacity: 1; }
-  50% { transform: translate(8px, 2px) scale(0.9); opacity: 0.6; }
-  75% { transform: translate(3px, -3px) scale(1.1); opacity: 0.9; }
-}
-@keyframes starOrbit2 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-  25% { transform: translate(-3px, -4px) scale(1.2); opacity: 1; }
-  50% { transform: translate(-6px, 2px) scale(0.8); opacity: 0.5; }
-  75% { transform: translate(-2px, -2px) scale(1.1); opacity: 0.8; }
-}
-@keyframes starOrbit3 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-  30% { transform: translate(-4px, -3px) scale(1.3); opacity: 1; }
-  60% { transform: translate(-8px, 4px) scale(0.8); opacity: 0.5; }
-  85% { transform: translate(-3px, 1px) scale(1.1); opacity: 0.8; }
-}
-@keyframes starOrbit4 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-  25% { transform: translate(3px, -5px) scale(1.2); opacity: 1; }
-  50% { transform: translate(6px, 2px) scale(0.9); opacity: 0.5; }
-  75% { transform: translate(2px, -2px) scale(1.1); opacity: 0.8; }
-}
-@keyframes starOrbit5 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-  30% { transform: translate(4px, -4px) scale(1.3); opacity: 1; }
-  60% { transform: translate(8px, 3px) scale(0.8); opacity: 0.5; }
-  85% { transform: translate(3px, -1px) scale(1.1); opacity: 0.8; }
-}
-@keyframes starOrbit6 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-  30% { transform: translate(-3px, -3px) scale(1.2); opacity: 1; }
-  60% { transform: translate(-6px, 2px) scale(0.8); opacity: 0.5; }
-  85% { transform: translate(-2px, 0px) scale(1.1); opacity: 0.8; }
-}
-
-/* 月亮漂浮 */
-@keyframes moonDrift {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.6; }
-  25% { transform: translate(-3px, -5px) rotate(-5deg); opacity: 0.9; }
-  50% { transform: translate(2px, -2px) rotate(3deg); opacity: 0.7; }
-  75% { transform: translate(-2px, -4px) rotate(-2deg); opacity: 0.8; }
-}
-
-/* 发饰闪烁 */
-@keyframes hairpinGlow {
-  0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 6px rgba(255,215,0,0.5)); }
-  50% { transform: scale(1.15) rotate(8deg); filter: drop-shadow(0 0 14px rgba(255,215,0,0.8)); }
-}
-
-/* 行走弹跳 */
 @keyframes walkBounce {
   0%, 100% { transform: translateY(0); }
-  20% { transform: translateY(-6px); }
-  40% { transform: translateY(0); }
-  60% { transform: translateY(-3px); }
-  80% { transform: translateY(-1px); }
+  30% { transform: translateY(-5px); }
+  60% { transform: translateY(0); }
 }
 
-/* 开心跳跃 */
-@keyframes happyBounce {
-  0% { transform: translateY(0) scale(1); }
-  20% { transform: translateY(-20px) scale(1.04); }
-  40% { transform: translateY(-4px) scale(0.97); }
-  60% { transform: translateY(-14px) scale(1.02); }
-  80% { transform: translateY(-2px) scale(0.98); }
-  100% { transform: translateY(0) scale(1); }
+@keyframes happyJump {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(-16px); }
+  40% { transform: translateY(-4px); }
+  60% { transform: translateY(-10px); }
+  80% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
 }
 
-/* 饥饿 */
-@keyframes hungryShake {
+@keyframes hungryWobble {
   0%, 100% { transform: translateY(0); }
   25% { transform: translateY(-2px) rotate(2deg); }
-  50% { transform: translateY(0); }
   75% { transform: translateY(-1px) rotate(-2deg); }
 }
 
-@keyframes legWalk {
+@keyframes footWalk {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); }
 }
 
-@keyframes heartBurst {
+@keyframes heartUp {
   0% { opacity: 0; transform: translateY(0) scale(0) rotate(0deg); }
-  15% { opacity: 1; transform: translateY(-10px) scale(1.3) rotate(15deg); }
-  50% { opacity: 1; transform: translateY(-50px) scale(1) rotate(-8deg); }
-  100% { opacity: 0; transform: translateY(-90px) scale(0.4) rotate(10deg); }
+  15% { opacity: 1; transform: translateY(-8px) scale(1.2); }
+  50% { opacity: 0.9; transform: translateY(-40px); }
+  100% { opacity: 0; transform: translateY(-70px); }
 }
 
-@keyframes sparkleTwinkle {
-  0%, 100% { opacity: 0.3; transform: scale(0.8); }
-  50% { opacity: 0.8; transform: scale(1.3); }
-}
-
-/* ===== 移动端 ===== */
 @media (max-width: 600px) {
-  .pet-canvas { width: 74px; height: 100px; }
-  .pet-head { width: 48px; height: 46px; }
-  .pet-head::before { top: 4px; left: 8px; width: 15px; height: 10px; }
-  .pet-hair-back::before { width: 38px; height: 34px; top: -1px; left: -4px; }
-  .pet-hair-back::after { width: 36px; height: 32px; top: 0px; right: -4px; }
-  .pet-bangs { height: 22px; }
-  .pet-bangs::before { width: 54px; height: 28px; top: -5px; }
-  .pet-eyes { top: 15px; gap: 10px; }
-  .pet-eye { width: 11px; height: 12px; }
-  .pet-eye::after { width: 3.5px; height: 3.5px; top: 1px; right: 2px; }
-  .pet-eye .eye-sparkle2 { width: 1.5px; height: 1.5px; bottom: 2px; }
-  @keyframes eyeBlink {
-    0%, 96%, 100% { height: 12px; width: 11px; margin-top: 0; }
-    97% { height: 2px; width: 9px; margin-top: 5px; }
+  .pet-canvas { width: 56px; height: 70px; }
+  .pet-head { width: 42px; height: 40px; }
+  .pet-head::after { top: 5px; left: 11px; width: 11px; height: 7px; }
+  .pet-eyes { top: 13px; gap: 10px; }
+  .pet-eye { width: 7px; height: 8px; }
+  @keyframes blink {
+    0%, 96%, 100% { height: 8px; width: 7px; margin-top: 0; }
+    97% { height: 1.5px; width: 6px; margin-top: 3px; }
   }
-  .pet-eye.happy { width: 11px; height: 2px; margin-top: 5px; }
-  .pet-cheek { bottom: 10px; width: 8px; height: 5px; }
-  .pet-cheek.left { left: 2px; }
-  .pet-cheek.right { right: 2px; }
-  .pet-mouth { bottom: 7px; }
-  .pet-mouth svg { transform: scale(0.55); transform-origin: center; }
-  .pet-hairpin { top: -10px; right: 2px; font-size: 13px; }
-  .pet-torso { width: 20px; height: 11px; }
-  .pet-skirt { width: 28px; height: 14px; }
-  .pet-arm { width: 7px; height: 11px; }
-  .pet-arm.left { left: -6px; }
-  .pet-arm.right { right: -6px; }
-  .pet-leg { width: 6px; height: 5px; }
+  .pet-eye.happy { width: 8px; height: 2px; margin-top: 3px; }
+  .pet-cheek { bottom: 9px; width: 6px; height: 4px; }
+  .pet-cheek.left { left: 3px; }
+  .pet-cheek.right { right: 3px; }
+  .pet-mouth { bottom: 8px; }
+  .pet-mouth svg { transform: scale(0.6); }
+  .pet-body { width: 20px; height: 13px; }
+  .pet-foot { width: 6px; height: 4px; }
+  .pet-star { top: -12px; font-size: 12px; }
   .pet-heart { font-size: 9px; }
-  .pet-moon { font-size: 10px; top: -2px; right: -8px; }
-  .pet-star-deco { display: none; }
-  .pet-star-deco.d1, .pet-star-deco.d3 { display: block; }
-  .pet-star-deco.d1 { top: -12px; left: 2px; font-size: 6px; }
-  .pet-star-deco.d3 { bottom: 18px; left: -8px; font-size: 5px; }
 }
