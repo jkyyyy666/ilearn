@@ -73,6 +73,7 @@ export default function QuizPage() {
         setCurrentIndex((prev) => prev + 1);
         setLastAction(null);
       } else {
+        window.dispatchEvent(new CustomEvent("pet-feed"));
         setIsFinished(true);
       }
     }, 400);
@@ -98,6 +99,7 @@ export default function QuizPage() {
         setCurrentIndex((prev) => prev + 1);
         setLastAction(null);
       } else {
+        window.dispatchEvent(new CustomEvent("pet-feed"));
         setIsFinished(true);
       }
     }, 400);

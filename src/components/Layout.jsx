@@ -2,6 +2,7 @@
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import StarBackground from "./StarBackground";
+import Pet from "./Pet";
 
 /**
  * 全局布局组件
@@ -15,6 +16,7 @@ export default function Layout() {
   return (
     <>
       <StarBackground />
+      <Pet />
       <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", background: "transparent" }}>
         {/* 顶部导航 */}
         <header

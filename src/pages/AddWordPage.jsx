@@ -82,6 +82,7 @@ export default function AddWordPage() {
         };
 
     words.addWord(lang, wordData);
+    window.dispatchEvent(new CustomEvent("pet-feed"));
     addToast("单词已添加！", "success");
 
     // 重置表单
