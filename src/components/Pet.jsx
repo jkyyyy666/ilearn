@@ -183,7 +183,7 @@ export default function Pet() {
 
   return (
     <div className={wrapperClass} style={{ left: position + "%" }}>
-      <div className="pet-canvas" onClick={isHome ? handleClick : undefined} style={{ cursor: isHome ? "pointer" : "default" }}>
+      <div className="pet-canvas" onClick={handleClick}>
 
         {/* 对话气泡 */}
         {bubble && (
