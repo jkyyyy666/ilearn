@@ -1,0 +1,19 @@
+{
+  "name": "婉儿中文学习日记",
+  "short_name": "瀛︿腑鏂?,
+  "description": "楂樻晥瀛︿範涓枃鍜岃嫳鏂囪瘝姹?,
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4F46E5",
+  "orientation": "portrait-primary",
+  "categories": ["education", "languages"],
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
