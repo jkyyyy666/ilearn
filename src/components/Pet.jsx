@@ -153,7 +153,7 @@ export default function Pet() {
     if (isScared) return;
     setIsScared(true);
     setIsRunning(true);
-    showBubble("呀！被发现了 😰");
+    showBubble(CLICK_MESSAGES[Math.floor(Math.random() * CLICK_MESSAGES.length)]);
 
     const newSweats = Array.from({ length: 3 }, (_, i) => ({
       id: Date.now() + i,
