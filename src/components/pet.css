@@ -1,322 +1,269 @@
-/* ===== 可爱团子小精灵样式 ===== */
+/* ===== 泡泡玛特风格星星人小精灵 ===== */
 
 /* 容器 */
 .pet-wrapper {
   position: fixed;
-  bottom: 110px;
+  bottom: 100px;
   z-index: 1;
   pointer-events: none;
   user-select: none;
   transition: left 5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* 主体画布 */
+/* 画布 */
 .pet-canvas {
   position: relative;
-  width: 80px;
-  height: 90px;
+  width: 90px;
+  height: 120px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
-/* 🍡 团子身体 */
-.pet-body {
-  width: 62px;
-  height: 58px;
-  border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
-  background: linear-gradient(160deg, #FFF5F9 0%, #FFD6E8 40%, #FFB0D0 100%);
+/* ⭐ 星星头 - 使用 clip-path 五角星 */
+.pet-head {
+  width: 72px;
+  height: 68px;
+  clip-path: polygon(50% 0%, 63% 27%, 98% 35%, 75% 57%, 79% 91%, 50% 73%, 21% 91%, 25% 57%, 2% 35%, 37% 27%);
+  background: linear-gradient(145deg, #FFE8F0 0%, #FFB8D4 50%, #F08EB8 100%);
   position: relative;
-  box-shadow:
-    0 4px 20px rgba(255, 150, 190, 0.4),
-    0 0 40px rgba(255, 150, 190, 0.15),
-    inset 0 -4px 8px rgba(200, 80, 130, 0.1);
-  animation: petFloat 3s ease-in-out infinite;
+  z-index: 2;
+  animation: starFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 15px rgba(240, 142, 184, 0.4));
 }
 
-/* 身体高光 */
-.pet-body::before {
+/* 星星内发光 */
+.pet-head::before {
   content: '';
   position: absolute;
-  top: 8px;
-  left: 12px;
-  width: 18px;
-  height: 12px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(255,255,255,0.7) 0%, transparent 70%);
-  z-index: 3;
-}
-
-/* 🔮 底部阴影 */
-.pet-shadow {
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.08);
-  animation: petShadow 3s ease-in-out infinite;
-  z-index: -1;
-}
-
-/* 👂 小圆耳朵 */
-.pet-ears {
-  position: absolute;
-  top: -8px;
-  left: 0;
-  right: 0;
+  inset: 4px;
+  clip-path: polygon(50% 0%, 63% 27%, 98% 35%, 75% 57%, 79% 91%, 50% 73%, 21% 91%, 25% 57%, 2% 35%, 37% 27%);
+  background: linear-gradient(145deg, rgba(255,255,255,0.4) 0%, transparent 60%);
   z-index: 1;
 }
-.pet-ear {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #FFC8DE, #FFA8C4);
-  top: 0;
-  box-shadow: inset 0 -2px 4px rgba(200,80,130,0.15);
-}
-.pet-ear.left { left: 10px; }
-.pet-ear.right { right: 10px; }
 
-/* 👁️ 大眼睛 */
+/* 👁️ 眼睛 - 极简圆点 */
 .pet-eyes {
   position: absolute;
-  top: 15px;
+  top: 26px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 14px;
-  z-index: 4;
+  gap: 16px;
+  z-index: 3;
 }
-
 .pet-eye {
-  position: relative;
-  width: 12px;
-  height: 14px;
-  background: radial-gradient(circle at 55% 40%, #4A3040, #2D1B36);
+  width: 8px;
+  height: 8px;
+  background: #2D1B36;
   border-radius: 50%;
-  animation: petBlink 3.5s ease-in-out infinite;
+  animation: eyeBlink 3s ease-in-out infinite;
 }
-
-/* 👁️ 眼睛高光 */
-.pet-eye::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 4px;
-  height: 4px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.9;
-}
-
-/* 眨眼状态 */
+/* 眨眼 */
 .pet-eye.blink {
   animation: none;
   height: 2px;
-  margin-top: 6px;
-  background: #4A3040;
+  width: 6px;
+  margin-top: 3px;
   border-radius: 2px;
-  overflow: hidden;
 }
-.pet-eye.blink::after { display: none; }
 
-/* 眼睛闭合线 */
-.pet-eye.closed {
-  height: 2px;
-  margin-top: 6px;
-  background: #4A3040;
-  border-radius: 2px;
-  overflow: hidden;
-}
-.pet-eye.closed::after { display: none; }
-
-/* 🥰 腮红 */
-.pet-blush {
+/* 😊 微笑 */
+.pet-smile {
   position: absolute;
-  bottom: 13px;
-  width: 14px;
-  height: 9px;
-  border-radius: 50%;
-  background: rgba(255, 100, 130, 0.3);
-  z-index: 2;
-  animation: blushPulse 3s ease-in-out infinite;
-}
-.pet-blush.left { left: 1px; }
-.pet-blush.right { right: 1px; }
-
-/* 😊 嘴巴 */
-.pet-mouth {
-  position: absolute;
-  bottom: 10px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
+}
+.pet-smile svg {
   transition: all 0.3s;
 }
-.pet-mouth::before {
-  content: '';
-  display: block;
+.pet-smile.happy svg path {
+  stroke-width: 2.5;
+  d: path("M8,4 Q12,9 16,4");
+}
+
+/* 🥰 腮红 */
+.pet-cheek {
+  position: absolute;
+  bottom: 16px;
   width: 8px;
-  height: 4px;
-  border-bottom: 2.5px solid #D4607A;
-  border-radius: 0 0 10px 10px;
-  transition: all 0.3s;
-}
-
-/* 开心嘴巴 - 张开笑 */
-.pet-mouth.happy::before {
-  width: 12px;
-  height: 6px;
-  border-bottom: 3px solid #D4607A;
-  border-radius: 0 0 12px 12px;
-}
-
-/* 饥饿嘴巴 - 小O形 */
-.pet-mouth.hungry::before {
-  width: 6px;
-  height: 6px;
-  border: 2px solid #D4607A;
+  height: 5px;
   border-radius: 50%;
-  border-bottom-width: 2px;
+  background: rgba(255, 100, 130, 0.3);
+  z-index: 2;
+}
+.pet-cheek.left { left: 6px; }
+.pet-cheek.right { right: 6px; }
+
+/* 📦 小身体 - 圆角矩形 */
+.pet-body {
+  width: 32px;
+  height: 22px;
+  background: linear-gradient(180deg, #FFCCE0, #F0A0C4);
+  border-radius: 4px 4px 8px 8px;
+  margin-top: -4px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(240, 142, 184, 0.3);
+  animation: bodyFloat 3s ease-in-out infinite;
 }
 
-/* ⭐ 小星星头饰 */
-.pet-star {
+/* 🤚 小手臂 */
+.pet-arm {
   position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  z-index: 5;
-  animation: starBounce 2.5s ease-in-out infinite;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
+  top: 2px;
+  width: 10px;
+  height: 5px;
+  background: #F0A0C4;
+  border-radius: 5px;
+  z-index: 0;
+}
+.pet-arm.left {
+  left: -8px;
+  transform: rotate(-20deg);
+  animation: armSwing 2s ease-in-out infinite;
+}
+.pet-arm.right {
+  right: -8px;
+  transform: rotate(20deg);
+  animation: armSwing 2s ease-in-out infinite 0.3s;
 }
 
-/* 💕 心形动画 */
-.pet-heart {
-  position: absolute;
-  font-size: 14px;
-  opacity: 0;
-  animation: heartFloat 2s ease-out forwards;
-  z-index: 10;
+/* 🦶 小脚 */
+.pet-legs {
+  display: flex;
+  gap: 6px;
+  margin-top: -1px;
+  z-index: 0;
 }
-
-/* 👣 走路时的脚 */
-.pet-foot {
-  position: absolute;
-  bottom: -3px;
+.pet-leg {
   width: 10px;
   height: 6px;
-  border-radius: 50%;
-  background: #FFC0D4;
-  z-index: 0;
-  animation: footWiggle 0.6s ease-in-out infinite;
+  background: #F0A0C4;
+  border-radius: 0 0 5px 5px;
 }
-.pet-foot.left { left: 8px; }
-.pet-foot.right { right: 8px; animation-delay: 0.3s; }
+
+/* 💕 心形特效 */
+.pet-heart {
+  position: absolute;
+  font-size: 13px;
+  opacity: 0;
+  animation: heartPop 1.8s ease-out forwards;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ⭐ 装饰小星星 */
+.pet-sparkle {
+  position: absolute;
+  font-size: 8px;
+  opacity: 0;
+  z-index: 6;
+}
+.pet-sparkle.s1 {
+  top: -8px;
+  left: 10px;
+  animation: sparkleTwinkle 3s ease-in-out infinite;
+}
+.pet-sparkle.s2 {
+  top: -4px;
+  right: 6px;
+  animation: sparkleTwinkle 3s ease-in-out infinite 1s;
+}
+.pet-sparkle.s3 {
+  top: 30px;
+  left: -8px;
+  animation: sparkleTwinkle 3s ease-in-out infinite 0.5s;
+}
 
 /* ====== 动画 ====== */
 
-/* 浮动 */
-@keyframes petFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+/* 星星浮动 */
+@keyframes starFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
 }
 
-/* 影子随浮动变化 */
-@keyframes petShadow {
-  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.08; }
-  50% { transform: translateX(-50%) scale(0.7); opacity: 0.04; }
+/* 身体跟随浮动 */
+@keyframes bodyFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 /* 眨眼 */
-@keyframes petBlink {
-  0%, 96%, 100% { height: 14px; margin-top: 0; }
-  97% { height: 2px; margin-top: 6px; }
+@keyframes eyeBlink {
+  0%, 96%, 100% { height: 8px; width: 8px; margin-top: 0; }
+  97% { height: 2px; width: 6px; margin-top: 3px; border-radius: 2px; }
 }
 
-/* 腮红呼吸 */
-@keyframes blushPulse {
-  0%, 100% { opacity: 0.25; }
-  50% { opacity: 0.4; }
-}
-
-/* 星星弹跳 */
-@keyframes starBounce {
-  0%, 100% { transform: translateX(-50%) rotate(-5deg) scale(1); }
-  50% { transform: translateX(-50%) rotate(5deg) scale(1.15); }
-}
-
-/* 脚摆动 */
-@keyframes footWiggle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
+/* 手臂摆动 */
+@keyframes armSwing {
+  0%, 100% { transform: rotate(-20deg); }
+  50% { transform: rotate(-10deg); }
 }
 
 /* 行走弹跳 */
-@keyframes petWalk {
-  0%, 100% { transform: translateY(0); }
-  30% { transform: translateY(-6px); }
-  60% { transform: translateY(-2px); }
+@keyframes walkBounce {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  25% { transform: translateY(-5px) rotate(-1deg); }
+  50% { transform: translateY(0) rotate(3deg); }
+  75% { transform: translateY(-3px) rotate(1deg); }
 }
 
 /* 开心跳跃 */
-@keyframes petHappyJump {
-  0% { transform: translateY(0) scale(1); }
-  15% { transform: translateY(-18px) scale(1.05); }
-  30% { transform: translateY(-6px) scale(0.97); }
-  45% { transform: translateY(-14px) scale(1.03); }
-  60% { transform: translateY(-4px) scale(0.98); }
-  80% { transform: translateY(-8px) scale(1.02); }
-  100% { transform: translateY(0) scale(1); }
+@keyframes happyBounce {
+  0% { transform: translateY(0) rotate(-2deg) scale(1); }
+  20% { transform: translateY(-16px) rotate(-4deg) scale(1.05); }
+  40% { transform: translateY(-4px) rotate(2deg) scale(0.98); }
+  60% { transform: translateY(-12px) rotate(-2deg) scale(1.03); }
+  80% { transform: translateY(-2px) rotate(1deg) scale(0.99); }
+  100% { transform: translateY(0) rotate(-2deg) scale(1); }
 }
 
-/* 心形上浮 */
-@keyframes heartFloat {
-  0% { opacity: 1; transform: translateY(0) scale(0.3) rotate(0deg); }
-  30% { opacity: 1; transform: translateY(-20px) scale(1.1) rotate(8deg); }
-  60% { opacity: 0.8; transform: translateY(-50px) scale(1) rotate(-5deg); }
-  100% { opacity: 0; transform: translateY(-80px) scale(0.6) rotate(5deg); }
+/* 饥饿抖动 */
+@keyframes hungryShake {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  20% { transform: translateY(-2px) rotate(-4deg); }
+  40% { transform: translateY(0) rotate(0deg); }
+  60% { transform: translateY(-1px) rotate(-4deg); }
+  80% { transform: translateY(0) rotate(-1deg); }
 }
 
-/* 饥饿状态 - 委屈抖动 */
-@keyframes petShiver {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-2px) rotate(-2deg); }
-  50% { transform: translateY(0) rotate(0deg); }
-  75% { transform: translateY(-1px) rotate(2deg); }
+/* 心形弹出 */
+@keyframes heartPop {
+  0% { opacity: 0; transform: translateY(0) scale(0) rotate(0deg); }
+  20% { opacity: 1; transform: translateY(-10px) scale(1.2) rotate(10deg); }
+  60% { opacity: 1; transform: translateY(-50px) scale(1) rotate(-5deg); }
+  100% { opacity: 0; transform: translateY(-90px) scale(0.5) rotate(5deg); }
 }
 
-/* 移动端适配 */
+/* 星星闪烁 */
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+/* 移动端 */
 @media (max-width: 600px) {
-  .pet-canvas { width: 56px; height: 64px; }
-  .pet-body { width: 44px; height: 41px; }
-  .pet-body::before { top: 5px; left: 8px; width: 13px; height: 9px; }
-  .pet-shadow { width: 28px; height: 6px; }
-  .pet-ear { width: 10px; height: 10px; }
-  .pet-ear.left { left: 6px; }
-  .pet-ear.right { right: 6px; }
-  .pet-eyes { top: 10px; gap: 10px; }
-  .pet-eye { width: 9px; height: 10px; }
-  .pet-eye::after { width: 3px; height: 3px; top: 1px; right: 1px; }
-  @keyframes petBlink {
-    0%, 96%, 100% { height: 10px; margin-top: 0; }
-    97% { height: 2px; margin-top: 4px; }
+  .pet-canvas { width: 60px; height: 82px; }
+  .pet-head { width: 50px; height: 47px; }
+  .pet-eyes { top: 18px; gap: 11px; }
+  .pet-eye { width: 6px; height: 6px; }
+  @keyframes eyeBlink {
+    0%, 96%, 100% { height: 6px; width: 6px; margin-top: 0; }
+    97% { height: 1.5px; width: 5px; margin-top: 2px; }
   }
-  .pet-blush { bottom: 8px; width: 10px; height: 6px; }
-  .pet-blush.left { left: 0px; }
-  .pet-blush.right { right: 0px; }
-  .pet-mouth { bottom: 6px; }
-  .pet-mouth::before { width: 6px; height: 3px; }
-  .pet-mouth.happy::before { width: 9px; height: 5px; }
-  .pet-star { top: -13px; font-size: 12px; }
-  .pet-heart { font-size: 10px; }
-  .pet-foot { width: 7px; height: 4px; }
-  .pet-foot.left { left: 5px; }
-  .pet-foot.right { right: 5px; }
+  .pet-cheek { bottom: 10px; width: 6px; height: 4px; }
+  .pet-cheek.left { left: 3px; }
+  .pet-cheek.right { right: 3px; }
+  .pet-smile { bottom: 8px; }
+  .pet-smile svg { transform: scale(0.7); }
+  .pet-body { width: 22px; height: 16px; }
+  .pet-arm { width: 7px; height: 4px; }
+  .pet-arm.left { left: -6px; }
+  .pet-arm.right { right: -6px; }
+  .pet-leg { width: 7px; height: 4px; }
+  .pet-heart { font-size: 9px; }
 }
