@@ -1,12 +1,19 @@
-/* ===== 星空守护精灵 - SVG 图片版 ===== */
+/* ===== 星空守护精灵 ===== */
 
 .pet-wrapper {
   position: fixed;
   bottom: 80px;
   z-index: 1;
-  pointer-events: none;
   user-select: none;
-  transition: left 6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: left 4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pet-wrapper.running {
+  transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pet-wrapper.scared {
+  animation: petScared 0.3s ease 2;
 }
 
 .pet-canvas {
@@ -16,6 +23,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .pet-img {
@@ -25,6 +34,7 @@
   animation: petFloat 3.5s ease-in-out infinite;
   filter: drop-shadow(0 8px 30px rgba(130, 150, 255, 0.2));
   transition: transform 0.3s;
+  pointer-events: none;
 }
 
 .pet-img.walking {
@@ -39,6 +49,11 @@
   animation: petHungry 3s ease-in-out infinite;
 }
 
+/* 逃跑时的震动 */
+.pet-img.scared {
+  animation: petScared 0.15s ease 4;
+}
+
 /* 喂食心形 */
 .pet-heart {
   position: absolute;
@@ -48,6 +63,15 @@
   z-index: 10;
   pointer-events: none;
   filter: drop-shadow(0 2px 6px rgba(255, 80, 150, 0.3));
+}
+
+/* 逃跑时的汗滴 */
+.pet-sweat {
+  position: absolute;
+  font-size: 12px;
+  z-index: 8;
+  pointer-events: none;
+  animation: sweatDrop 0.8s ease-out forwards;
 }
 
 @keyframes petFloat {
@@ -76,11 +100,22 @@
   75% { transform: translateY(-1px) rotate(-2deg); }
 }
 
+@keyframes petScared {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
 @keyframes heartUp {
   0% { opacity: 0; transform: translateY(0) scale(0); }
   15% { opacity: 1; transform: translateY(-10px) scale(1.2); }
   50% { opacity: 0.9; transform: translateY(-50px); }
   100% { opacity: 0; transform: translateY(-90px); }
+}
+
+@keyframes sweatDrop {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(20px); }
 }
 
 @media (max-width: 600px) {
