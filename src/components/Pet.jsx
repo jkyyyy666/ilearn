@@ -2,6 +2,22 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import "./pet.css";
 
+/** 点击精灵时的互动语 */
+const CLICK_MESSAGES = [
+  "呀！被发现了 😰",
+  "主人该好好学习啦！📚",
+  "不要摸我，快去看书！📖",
+  "今天背单词了吗？🤔",
+  "再玩我就要生气啦！😤",
+  "主人快去学习！💪",
+  "我…我才不是宠物呢！😳",
+  "呀！好害羞 >///<",
+  "主人别闹，快去背单词！📝",
+  "你该不会又在偷懒吧？😏",
+  "嘿嘿，抓到主人偷懒了！😋",
+  "今天的单词背完了吗？🎯",
+];
+
 /** 鼓励语列表 */
 const CHEER_MESSAGES = [
   "主人太棒了！🎉",
