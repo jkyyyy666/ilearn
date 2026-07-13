@@ -44,6 +44,26 @@ export default function AddWordPage() {
       }
     }
 
+    // 检查重复 - 中文模块按中文查重，英文模块按英文查重
+    const allWords = words.getAllWords(lang);
+    if (isChinese) {
+      const duplicate = allWords.some(
+        (w) => w.chinese?.trim()?.toLowerCase() === form.chinese.trim().toLowerCase()
+      );
+      if (duplicate) {
+        addToast(`「${form.chinese.trim()}」已存在，请勿重复添加`, "error");
+        return;
+      }
+    } else {
+      const duplicate = allWords.some(
+        (w) => w.english?.trim()?.toLowerCase() === form.english.trim().toLowerCase()
+      );
+      if (duplicate) {
+        addToast(`「${form.english.trim()}」already exists`, "error");
+        return;
+      }
+    }
+
     // 构建单词对象
     const wordData = isChinese
       ? {
