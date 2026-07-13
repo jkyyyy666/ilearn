@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import "./pet.css";
 
 /** 鼓励语列表 */
@@ -30,6 +31,9 @@ export default function Pet() {
   const [isRunning, setIsRunning] = useState(false);
   const [sweats, setSweats] = useState([]);
   const [bubble, setBubble] = useState(null); // { text, key }
+  const [hasWelcomed, setHasWelcomed] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
   const bubbleTimeout = useRef(null);
 
   const checkFedToday = useCallback(() => {
@@ -73,6 +77,26 @@ export default function Pet() {
     const msg = CHEER_MESSAGES[Math.floor(Math.random() * CHEER_MESSAGES.length)];
     showBubble(msg);
   }, [showBubble]);
+
+  // ===== 首页欢迎主人回家 =====
+  useEffect(() => {
+    if (!isHome || hasWelcomed) return;
+    // 延迟一下等页面加载完再打招呼
+    const timer = setTimeout(() => {
+      const hour = new Date().getHours();
+      let greeting = "主人，欢迎回家！🥰";
+      if (hour < 6) greeting = "这么晚还在学习，好努力呀！🌙";
+      else if (hour < 9) greeting = "主人早安！今天也要加油哦！☀️";
+      else if (hour < 12) greeting = "上午好呀主人！一起学习吧！📚";
+      else if (hour < 14) greeting = "主人中午好！吃饱了才有力气学习！🍚";
+      else if (hour < 18) greeting = "下午好主人！来学点新词吧！✨";
+      else if (hour < 21) greeting = "主人晚上好！今天学了多少呀？🌟";
+      else greeting = "主人辛苦了！要不要再复习一下？💪";
+      showBubble(greeting);
+      setHasWelcomed(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [isHome, hasWelcomed, showBubble]);
 
   // 监听喂食（学习完成）
   useEffect(() => {
