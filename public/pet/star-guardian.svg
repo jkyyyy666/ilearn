@@ -1,222 +1,163 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600" width="500" height="600">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
   <defs>
-    <!-- 夜空 -->
-    <radialGradient id="sky" cx="50%" cy="40%" r="65%">
-      <stop offset="0%" stop-color="#1E1E5A"/>
-      <stop offset="50%" stop-color="#121245"/>
-      <stop offset="100%" stop-color="#08082A"/>
+    <!-- 团子身体渐变 -->
+    <radialGradient id="dangoBody" cx="45%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#FFF5F9"/>
+      <stop offset="45%" stop-color="#FFE4EE"/>
+      <stop offset="80%" stop-color="#FFC8DE"/>
+      <stop offset="100%" stop-color="#F0A8C8"/>
     </radialGradient>
 
-    <!-- 云朵 -->
-    <radialGradient id="cloud" cx="50%" cy="30%" r="70%">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="60%" stop-color="#E8EEFF"/>
-      <stop offset="100%" stop-color="#D0D8F0"/>
+    <!-- 团子高光 -->
+    <radialGradient id="dangoHighlight" cx="35%" cy="30%" r="40%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.6)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
     </radialGradient>
 
-    <!-- 皮肤 -->
-    <radialGradient id="skin" cx="40%" cy="35%" r="60%">
-      <stop offset="0%" stop-color="#FFF8F5"/>
-      <stop offset="50%" stop-color="#FFEFE8"/>
-      <stop offset="100%" stop-color="#F5E0D8"/>
+    <!-- 耳朵渐变 -->
+    <radialGradient id="earGrad" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#FFD6E8"/>
+      <stop offset="100%" stop-color="#F0A8C8"/>
     </radialGradient>
 
-    <!-- 睡衣黄色 -->
-    <linearGradient id="suit" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFE55C"/>
-      <stop offset="100%" stop-color="#F5CC30"/>
-    </linearGradient>
-
-    <!-- 帽子 -->
-    <linearGradient id="cap" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="#E8ECFA"/>
-    </linearGradient>
-
-    <!-- 星星发光 -->
-    <radialGradient id="starglow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FFF8C4" stop-opacity="0.5"/>
-      <stop offset="30%" stop-color="#FFE44D" stop-opacity="0.15"/>
-      <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+    <!-- 腮红渐变 -->
+    <radialGradient id="blushGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,110,150,0.25)"/>
+      <stop offset="100%" stop-color="rgba(255,110,150,0)"/>
     </radialGradient>
 
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="rgba(0,0,20,0.15)"/>
-    </filter>
+    <!-- 阴影 -->
+    <radialGradient id="shadowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(0,0,0,0.12)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+
     <filter id="glow">
-      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feGaussianBlur stdDeviation="4" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
 
-  <!-- 夜空 -->
-  <rect width="500" height="600" fill="url(#sky)"/>
+  <!-- 浅色背景 -->
+  <rect width="400" height="500" fill="#F0F4FF" rx="20"/>
 
-  <!-- 银河晕 -->
-  <ellipse cx="250" cy="200" rx="280" ry="200" fill="rgba(120,140,255,0.06)"/>
+  <!-- 底部阴影 -->
+  <ellipse cx="200" cy="430" rx="70" ry="12" fill="url(#shadowGrad)">
+    <animate attributeName="rx" values="70;55;70" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="ry" values="12;8;12" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.6;1" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
 
-  <!-- 背景星星 -->
-  <g fill="#FFD700" opacity="0.35">
-    <circle cx="60" cy="50" r="2"><animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" repeatCount="indefinite"/></circle>
-    <circle cx="440" cy="70" r="1.8"><animate attributeName="opacity" values="0.3;0.9;0.3" dur="2.5s" repeatCount="indefinite"/></circle>
-    <circle cx="100" cy="140" r="1.5"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="1.8s" repeatCount="indefinite"/></circle>
-    <circle cx="410" cy="160" r="2"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite"/></circle>
-    <circle cx="40" cy="320" r="1.5"/>
-    <circle cx="460" cy="360" r="1.8"/>
-    <circle cx="70" cy="460" r="1.5"/>
-    <circle cx="430" cy="480" r="1.5"/>
-    <circle cx="200" cy="40" r="1.2"/>
-    <circle cx="320" cy="55" r="1.5"/>
-    <circle cx="480" cy="250" r="1"/>
-    <circle cx="25" cy="200" r="1.2"/>
+  <!-- 装饰小星星 -->
+  <g opacity="0.3">
+    <text x="80" y="120" font-size="10" fill="#FFD700">✦
+      <animate attributeName="y" values="120;112;120" dur="3s" repeatCount="indefinite"/>
+    </text>
+    <text x="310" y="100" font-size="8" fill="#B8D4FF">✦
+      <animate attributeName="y" values="100;93;100" dur="2.5s" repeatCount="indefinite"/>
+    </text>
+    <text x="70" y="280" font-size="7" fill="#FFB8D8">✦
+      <animate attributeName="y" values="280;274;280" dur="3.5s" repeatCount="indefinite"/>
+    </text>
+    <text x="320" y="300" font-size="9" fill="#FFD700">✦
+      <animate attributeName="y" values="300;292;300" dur="2.8s" repeatCount="indefinite"/>
+    </text>
   </g>
 
-  <!-- 暖光氛围 -->
-  <ellipse cx="250" cy="380" rx="220" ry="180" fill="rgba(255,230,150,0.08)"/>
-
-  <!-- ===== 云朵床 ===== -->
-  <g filter="url(#shadow)">
-    <ellipse cx="250" cy="500" rx="180" ry="45" fill="url(#cloud)"/>
-    <ellipse cx="140" cy="485" rx="75" ry="38" fill="url(#cloud)"/>
-    <ellipse cx="360" cy="485" rx="70" ry="35" fill="url(#cloud)"/>
-    <ellipse cx="250" cy="472" rx="95" ry="32" fill="url(#cloud)"/>
-    <ellipse cx="175" cy="468" rx="55" ry="25" fill="#FAFCFF"/>
-    <ellipse cx="325" cy="468" rx="50" ry="22" fill="#FAFCFF"/>
+  <!-- ===== 🦶 小脚丫 ===== -->
+  <g>
+    <ellipse cx="178" cy="398" rx="12" ry="7" fill="#F0A8C8"/>
+    <ellipse cx="222" cy="398" rx="12" ry="7" fill="#F0A8C8"/>
   </g>
 
-  <!-- ===== 身体 ===== -->
-  <g filter="url(#shadow)">
-    <!-- 腿 -->
-    <rect x="205" y="405" width="28" height="48" rx="12" fill="url(#suit)"/>
-    <rect x="267" y="405" width="28" height="48" rx="12" fill="url(#suit)"/>
+  <!-- ===== 🍡 团子身体 ===== -->
+  <g>
+    <!-- 主体 -->
+    <ellipse cx="200" cy="300" rx="80" ry="85" fill="url(#dangoBody)">
+      <animate attributeName="ry" values="85;83;85" dur="3s" repeatCount="indefinite"/>
+    </ellipse>
 
-    <!-- 脚 -->
-    <ellipse cx="218" cy="455" rx="18" ry="9" fill="#FFEFE8"/>
-    <ellipse cx="282" cy="455" rx="18" ry="9" fill="#FFEFE8"/>
+    <!-- 身体高光 -->
+    <ellipse cx="175" cy="270" rx="45" ry="40" fill="url(#dangoHighlight)"/>
 
-    <!-- 身体 -->
-    <rect x="182" y="330" width="136" height="85" rx="28" fill="url(#suit)"/>
+    <!-- 身体二次高光 -->
+    <ellipse cx="165" cy="255" rx="20" ry="12" fill="rgba(255,255,255,0.25)" transform="rotate(-15,165,255)"/>
 
-    <!-- 睡衣条纹装饰 -->
-    <rect x="200" y="345" width="100" height="2" rx="1" fill="rgba(255,255,255,0.15)"/>
-    <rect x="200" y="365" width="100" height="2" rx="1" fill="rgba(255,255,255,0.15)"/>
-    <rect x="200" y="385" width="100" height="2" rx="1" fill="rgba(255,255,255,0.15)"/>
-
-    <!-- 纽扣 -->
-    <circle cx="250" cy="358" r="4" fill="#FFE88C" stroke="#E0B820" stroke-width="1.2"/>
-    <circle cx="250" cy="378" r="4" fill="#FFE88C" stroke="#E0B820" stroke-width="1.2"/>
-    <circle cx="250" cy="398" r="4" fill="#FFE88C" stroke="#E0B820" stroke-width="1.2"/>
-
-    <!-- 衣领 -->
-    <path d="M215,330 Q250,345 285,330" fill="#FFF8F0" stroke="#E0B820" stroke-width="1.5"/>
+    <!-- 底部反光 -->
+    <ellipse cx="200" cy="365" rx="40" ry="10" fill="rgba(255,200,220,0.15)"/>
   </g>
 
-  <!-- ===== 手臂 ===== -->
-  <g filter="url(#shadow)">
-    <!-- 左臂 -->
-    <path d="M182,360 Q158,385 162,412 Q165,420 173,416" fill="none" stroke="url(#suit)" stroke-width="24" stroke-linecap="round"/>
-    <ellipse cx="170" cy="416" rx="10" ry="7" fill="#FFEFE8" transform="rotate(-8,170,416)"/>
+  <!-- ===== 👂 小圆耳朵 ===== -->
+  <g>
+    <!-- 左耳 -->
+    <circle cx="140" cy="240" r="16" fill="url(#earGrad)">
+      <animate attributeName="cy" values="240;236;240" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="138" cy="237" r="6" fill="rgba(255,255,255,0.25)"/>
 
-    <!-- 右臂 -->
-    <path d="M318,360 Q342,380 338,402 Q336,410 328,406" fill="none" stroke="url(#suit)" stroke-width="24" stroke-linecap="round"/>
-    <ellipse cx="330" cy="406" rx="10" ry="7" fill="#FFEFE8" transform="rotate(8,330,406)"/>
+    <!-- 右耳 -->
+    <circle cx="260" cy="240" r="16" fill="url(#earGrad)">
+      <animate attributeName="cy" values="240;236;240" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="258" cy="237" r="6" fill="rgba(255,255,255,0.25)"/>
   </g>
 
-  <!-- ===== 抱着的星星 ===== -->
+  <!-- ===== ⭐ 星星头饰 ===== -->
   <g filter="url(#glow)">
-    <circle cx="250" cy="395" r="45" fill="url(#starglow)"/>
-    <circle cx="250" cy="395" r="30" fill="url(#starglow)"/>
+    <text x="200" y="208" text-anchor="middle" font-size="28" fill="#FFD700" opacity="0.9">
+      ⭐
+      <animate attributeName="y" values="205;195;205" dur="2s" repeatCount="indefinite"/>
+    </text>
   </g>
-  <text x="250" y="407" text-anchor="middle" font-size="40" fill="#FFD700" opacity="0.9">★</text>
-  <text x="250" y="407" text-anchor="middle" font-size="35" fill="#FFF8C4" opacity="0.35">★</text>
-
-  <!-- 光芒 -->
-  <g stroke="#FFE44D" stroke-width="1.5" stroke-linecap="round" opacity="0.2">
-    <line x1="250" y1="345" x2="250" y2="330"><animate attributeName="opacity" values="0.1;0.4;0.1" dur="1.5s" repeatCount="indefinite"/></line>
-    <line x1="250" y1="445" x2="250" y2="460"><animate attributeName="opacity" values="0.1;0.4;0.1" dur="1.8s" repeatCount="indefinite"/></line>
-    <line x1="200" y1="395" x2="185" y2="395"><animate attributeName="opacity" values="0.1;0.4;0.1" dur="2s" repeatCount="indefinite"/></line>
-    <line x1="300" y1="395" x2="315" y2="395"><animate attributeName="opacity" values="0.1;0.4;0.1" dur="1.6s" repeatCount="indefinite"/></line>
+  <!-- 星星小光芒 -->
+  <g fill="#FFE44D" opacity="0.3">
+    <circle cx="185" cy="202" r="2"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="1.5s" repeatCount="indefinite"/></circle>
+    <circle cx="215" cy="200" r="1.5"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="1.8s" repeatCount="indefinite"/></circle>
+    <circle cx="200" cy="216" r="1.5"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="2s" repeatCount="indefinite"/></circle>
   </g>
 
-  <!-- ===== 大大的圆头 ===== -->
-  <g filter="url(#shadow)">
-    <!-- 头部 -->
-    <circle cx="250" cy="245" rx="78" fill="url(#skin)"/>
-
-    <!-- 额头高光 -->
-    <ellipse cx="230" cy="218" rx="25" ry="12" fill="rgba(255,255,255,0.3)" transform="rotate(-15,230,218)"/>
-
-    <!-- ===== 星星睡帽 ===== -->
-    <path d="M174,235 Q172,175 192,150 Q212,128 250,115 Q288,128 308,150 Q328,175 326,235 Q308,220 250,215 Q192,220 174,235Z"
-      fill="url(#cap)" stroke="rgba(200,210,240,0.2)" stroke-width="1"/>
-
-    <!-- 帽子纹理 -->
-    <path d="M195,155 Q215,168 235,158" fill="none" stroke="rgba(200,210,240,0.15)" stroke-width="1.5"/>
-    <path d="M265,155 Q285,168 305,160" fill="none" stroke="rgba(200,210,240,0.15)" stroke-width="1.5"/>
-
-    <!-- 帽沿 -->
-    <path d="M174,235 Q185,224 210,218 Q235,214 250,214 Q265,214 290,218 Q315,224 326,235"
-      fill="none" stroke="#FFF" stroke-width="4" stroke-linecap="round"/>
-
-    <!-- 帽尖星星 -->
-    <g filter="url(#glow)">
-      <text x="250" y="108" text-anchor="middle" font-size="20" fill="#FFD700" opacity="0.9">★</text>
-    </g>
-
-    <!-- ===== 超大眼睛 ===== -->
+  <!-- ===== 👁️ 大眼睛 ===== -->
+  <g>
     <!-- 左眼 -->
-    <ellipse cx="218" cy="252" rx="20" ry="22" fill="#1A0E38"/>
-    <!-- 左眼星光 -->
-    <circle cx="214" cy="245" r="2.5" fill="rgba(200,200,255,0.3)"/>
-    <circle cx="225" cy="258" r="1.5" fill="rgba(255,200,255,0.2)"/>
+    <ellipse cx="168" cy="295" rx="18" ry="20" fill="#2D1B36"/>
     <!-- 左眼高光 -->
-    <circle cx="213" cy="244" r="7" fill="#FFF"/>
-    <circle cx="225" cy="258" r="3" fill="rgba(255,255,255,0.6)"/>
+    <circle cx="163" cy="288" r="7" fill="rgba(255,255,255,0.85)"/>
+    <circle cx="173" cy="300" r="3" fill="rgba(255,255,255,0.5)"/>
+    <!-- 左眼小星光 -->
+    <circle cx="162" cy="286" r="2" fill="rgba(255,255,255,0.95)"/>
 
     <!-- 右眼 -->
-    <ellipse cx="282" cy="252" rx="20" ry="22" fill="#1A0E38"/>
-    <!-- 右眼星光 -->
-    <circle cx="278" cy="245" r="2.5" fill="rgba(200,200,255,0.3)"/>
-    <circle cx="289" cy="258" r="1.5" fill="rgba(255,200,255,0.2)"/>
+    <ellipse cx="232" cy="295" rx="18" ry="20" fill="#2D1B36"/>
     <!-- 右眼高光 -->
-    <circle cx="277" cy="244" r="7" fill="#FFF"/>
-    <circle cx="289" cy="258" r="3" fill="rgba(255,255,255,0.6)"/>
-
-    <!-- ===== 腮红 ===== -->
-    <ellipse cx="192" cy="270" rx="14" ry="8" fill="rgba(255,140,165,0.2)"/>
-    <ellipse cx="308" cy="270" rx="14" ry="8" fill="rgba(255,140,165,0.2)"/>
-
-    <!-- ===== 微笑 ===== -->
-    <path d="M238,278 Q250,286 262,278" fill="none" stroke="#D07080" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="227" cy="288" r="7" fill="rgba(255,255,255,0.85)"/>
+    <circle cx="237" cy="300" r="3" fill="rgba(255,255,255,0.5)"/>
+    <circle cx="226" cy="286" r="2" fill="rgba(255,255,255,0.95)"/>
   </g>
 
-  <!-- ===== 漂浮小星星 ===== -->
-  <g filter="url(#glow)" opacity="0.6">
-    <text x="130" y="280" font-size="16" fill="#FFD700">✦
-      <animate attributeName="y" values="280;268;280" dur="3s" repeatCount="indefinite"/>
-    </text>
-    <text x="360" y="260" font-size="14" fill="#FFE44D">★
-      <animate attributeName="y" values="260;250;260" dur="2.8s" repeatCount="indefinite"/>
-    </text>
-    <text x="110" y="390" font-size="12" fill="#B8D4FF">✧
-      <animate attributeName="y" values="390;380;390" dur="3.5s" repeatCount="indefinite"/>
-    </text>
-    <text x="390" y="360" font-size="15" fill="#FFD700">✦
-      <animate attributeName="y" values="360;348;360" dur="2.5s" repeatCount="indefinite"/>
-    </text>
-    <text x="145" y="200" font-size="10" fill="#FFB8D8">✦
-      <animate attributeName="y" values="200;192;200" dur="4s" repeatCount="indefinite"/>
-    </text>
-    <text x="355" y="190" font-size="11" fill="#FFD700">✧
-      <animate attributeName="y" values="190;180;190" dur="3.2s" repeatCount="indefinite"/>
-    </text>
+  <!-- ===== 🥰 腮红 ===== -->
+  <g>
+    <ellipse cx="132" cy="320" rx="15" ry="9" fill="url(#blushGrad)">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="268" cy="320" rx="15" ry="9" fill="url(#blushGrad)">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+    </ellipse>
   </g>
 
-  <!-- 微光粒子 -->
-  <g fill="#FFD700" opacity="0.25">
-    <circle cx="160" cy="330" r="2"><animate attributeName="opacity" values="0.1;0.5;0.1" dur="2.2s" repeatCount="indefinite"/></circle>
-    <circle cx="350" cy="310" r="1.5"><animate attributeName="opacity" values="0.1;0.5;0.1" dur="2.8s" repeatCount="indefinite"/></circle>
-    <circle cx="140" cy="420" r="1.5"><animate attributeName="opacity" values="0.1;0.5;0.1" dur="3s" repeatCount="indefinite"/></circle>
-    <circle cx="370" cy="400" r="2"><animate attributeName="opacity" values="0.1;0.5;0.1" dur="1.8s" repeatCount="indefinite"/></circle>
+  <!-- ===== 😊 微笑 ===== -->
+  <path d="M188,320 Q200,328 212,320" fill="none" stroke="#D4607A" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- 小鼻孔点缀 -->
+  <circle cx="197" cy="308" r="1.5" fill="rgba(200,100,130,0.15)"/>
+  <circle cx="203" cy="308" r="1.5" fill="rgba(200,100,130,0.15)"/>
+
+  <!-- ===== 👣 小脚（走路状态） ===== -->
+  <g opacity="0.3">
+    <ellipse cx="168" cy="408" rx="14" ry="6" fill="#F0A8C8" transform="rotate(-10,168,408)">
+      <animate attributeName="opacity" values="0;0.3;0;0.3;0" dur="1s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="232" cy="408" rx="14" ry="6" fill="#F0A8C8" transform="rotate(10,232,408)">
+      <animate attributeName="opacity" values="0.3;0;0.3;0;0.3" dur="1s" repeatCount="indefinite"/>
+    </ellipse>
   </g>
 </svg>
