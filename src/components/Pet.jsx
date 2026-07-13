@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./pet.css";
 
 /**
- * 泡泡玛特星星人精灵 v2
- * 优化：更圆润的星星、立体感渐变、弯笑眼、高光瞳
+ * 圆头可爱小精灵
+ * 圆圆的大脑袋 + 小身体，日系可爱风格
  */
 export default function Pet() {
   const [position, setPosition] = useState(() => 15 + Math.random() * 58);
@@ -17,11 +17,11 @@ export default function Pet() {
   const checkFedToday = useCallback(() => {
     try {
       for (const lang of ["chinese", "english"]) {
-        const history = JSON.parse(localStorage.getItem(lang + "_quiz_history") || "[]");
-        const today = new Date().toDateString();
-        if (history.some(r => new Date(r.date).toDateString() === today)) return true;
-        const words = JSON.parse(localStorage.getItem(lang + "_words") || "[]");
-        if (words.some(w => new Date(w.createdAt).toDateString() === today)) return true;
+        const h = JSON.parse(localStorage.getItem(lang + "_quiz_history") || "[]");
+        const t = new Date().toDateString();
+        if (h.some(r => new Date(r.date).toDateString() === t)) return true;
+        const w = JSON.parse(localStorage.getItem(lang + "_words") || "[]");
+        if (w.some(x => new Date(x.createdAt).toDateString() === t)) return true;
       }
     } catch {}
     return false;
@@ -29,25 +29,22 @@ export default function Pet() {
 
   useEffect(() => { setIsHungry(!checkFedToday()); }, [checkFedToday]);
 
-  // 眨眼
   useEffect(() => {
     const blink = () => { setIsBlinking(true); setTimeout(() => setIsBlinking(false), 140); };
-    const interval = setInterval(blink, 1800 + Math.random() * 5000);
+    const interval = setInterval(blink, 2000 + Math.random() * 4500);
     return () => clearInterval(interval);
   }, []);
 
-  // 随机走动
   useEffect(() => {
     const walk = () => {
       setIsWalking(true);
       setPosition(6 + Math.random() * 76);
       setTimeout(() => setIsWalking(false), 2800);
     };
-    const interval = setInterval(walk, 9000 + Math.random() * 15000);
+    const interval = setInterval(walk, 10000 + Math.random() * 14000);
     return () => clearInterval(interval);
   }, []);
 
-  // 监听喂食
   useEffect(() => {
     const handleFeed = () => {
       const emojis = ["❤️", "💖", "💕", "✨", "💗", "⭐", "🌸"];
@@ -61,20 +58,18 @@ export default function Pet() {
       setIsHungry(false);
       setIsHappy(true);
       setEyeHappy(true);
-      setTimeout(() => { setIsHappy(false); setEyeHappy(false); }, 3200);
-      setTimeout(() => setHearts([]), 2800);
+      setTimeout(() => { setIsHappy(false); setEyeHappy(false); }, 3000);
+      setTimeout(() => setHearts([]), 2600);
     };
     window.addEventListener("pet-feed", handleFeed);
     return () => window.removeEventListener("pet-feed", handleFeed);
   }, []);
 
-  // 定时检查
   useEffect(() => {
     const interval = setInterval(() => { setIsHungry(!checkFedToday()); }, 300000);
     return () => clearInterval(interval);
   }, [checkFedToday]);
 
-  // 头部动画
   const headAnim = isWalking
     ? { animation: "walkBounce 0.6s ease-in-out infinite" }
     : isHappy
@@ -87,7 +82,6 @@ export default function Pet() {
     <div className="pet-wrapper" style={{ left: position + "%" }}>
       <div className="pet-canvas">
 
-        {/* 💕 心形 */}
         {hearts.map(h => (
           <span key={h.id} className="pet-heart"
             style={{ left: h.x + "%", animationDelay: h.delay + "ms" }}>
@@ -95,30 +89,34 @@ export default function Pet() {
           </span>
         ))}
 
-        {/* 💫 装饰星星 */}
         <span className="pet-sparkle s1">✦</span>
         <span className="pet-sparkle s2">✧</span>
         <span className="pet-sparkle s3">✦</span>
         <span className="pet-sparkle s4">✧</span>
 
-        {/* 🤚 手臂 */}
-        <div className="pet-arm left" />
-        <div className="pet-arm right" />
+        {/* 👂 耳朵 */}
+        <div className="pet-ears">
+          <div className="pet-ear left" />
+          <div className="pet-ear right" />
+        </div>
 
-        {/* ⭐ 星星头 */}
+        {/* 🤚 手臂 */}
+        <div className="pet-arms">
+          <div className="pet-arm left" />
+          <div className="pet-arm right" />
+        </div>
+
+        {/* 🔵 圆头 */}
         <div className="pet-head" style={headAnim}>
 
-          {/* 👁️ 眼睛 */}
           <div className="pet-eyes">
             <div className={"pet-eye" + (isBlinking ? " blink" : eyeHappy ? " happy" : "")} />
             <div className={"pet-eye" + (isBlinking ? " blink" : eyeHappy ? " happy" : "")} />
           </div>
 
-          {/* 🥰 腮红 */}
           <div className="pet-cheek left" />
           <div className="pet-cheek right" />
 
-          {/* 😊 微笑 */}
           <div className="pet-mouth">
             <svg width="24" height="10" viewBox="0 0 24 10">
               <path
@@ -133,12 +131,12 @@ export default function Pet() {
         </div>
 
         {/* 📦 身体 */}
-        <div className="pet-body" />
-
-        {/* 🦶 脚 */}
-        <div className="pet-legs">
-          <div className={"pet-leg" + (isWalking ? " walk" : "")} />
-          <div className={"pet-leg" + (isWalking ? " walk-r" : "")} />
+        <div className="pet-body-wrap">
+          <div className="pet-body" />
+          <div className="pet-legs">
+            <div className={"pet-leg" + (isWalking ? " walk" : "")} />
+            <div className={"pet-leg" + (isWalking ? " walk-r" : "")} />
+          </div>
         </div>
 
       </div>
