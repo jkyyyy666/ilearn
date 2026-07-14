@@ -17,6 +17,15 @@
       "category": "简单",
       "id": "custom_1783998051008_ma3zhb",
       "createdAt": 1783998051008
+    },
+    {
+      "chinese": "绿色",
+      "pinyin": "lvse",
+      "english": "green",
+      "example": "绿色的草",
+      "category": "复杂",
+      "id": "custom_1783998110988_7fw6tw",
+      "createdAt": 1783998110988
     }
   ],
   "chinese_favorites": [],
