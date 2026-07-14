@@ -17,9 +17,10 @@ export default function GithubSyncPage() {
   const [isVerified, setIsVerified] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [warning, setWarning] = useState("");
   const [autoBackupEnabled, setAutoBackupEnabled] = useState(() => localStorage.getItem("cl_auto_backup") === "true");
 
-  // 注册自动备份回调，在自动备份完成时显示 Toast
+  // 注册自动备份回调
   useEffect(() => {
     setBackupCallback((result) => {
       addToast(result.message, result.success ? "success" : "error");
@@ -30,9 +31,10 @@ export default function GithubSyncPage() {
   // 自动验证已保存的 Token
   useEffect(() => {
     if (config.token && config.repo) {
-      verifyToken(config.token).then(r => {
+      verifyToken(config.token, config.repo).then(r => {
         setIsVerified(r.valid);
         if (r.valid) setUserInfo(r.login);
+        if (r.msg) setWarning(r.msg);
       });
     }
   }, []);
@@ -43,12 +45,18 @@ export default function GithubSyncPage() {
       return;
     }
     setIsLoading(true);
-    const result = await verifyToken(config.token.trim());
+    setWarning("");
+    const result = await verifyToken(config.token.trim(), config.repo.trim());
     if (result.valid) {
       saveGithubConfig({ token: config.token.trim(), repo: config.repo.trim() });
       setIsVerified(true);
       setUserInfo(result.login);
-      addToast("登录成功！欢迎 " + result.login + " 🎉", "success");
+      if (result.msg) {
+        setWarning(result.msg);
+        addToast("登录成功，但仓库访问异常，请检查上方提示", "warning");
+      } else {
+        addToast("登录成功！欢迎 " + result.login + " 🎉", "success");
+      }
     } else {
       addToast("Token 无效，请检查后重试", "error");
     }
@@ -60,6 +68,7 @@ export default function GithubSyncPage() {
     setIsVerified(false);
     setUserInfo(null);
     setConfig({ token: "", repo: "" });
+    setWarning("");
     addToast("已退出登录", "info");
   };
 
@@ -109,7 +118,7 @@ export default function GithubSyncPage() {
                 placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
               />
               <div style={{ fontSize: 11, color: "var(--text-tertiary)", marginTop: 4 }}>
-                需在 GitHub Settings → Developer settings → Personal access tokens 创建
+                GitHub Settings → Developer settings → Personal access tokens → 创建 Token
               </div>
             </div>
 
@@ -149,6 +158,17 @@ export default function GithubSyncPage() {
                 {userInfo} / {config.repo}
               </div>
             </div>
+
+            {/* 权限警告 */}
+            {warning && (
+              <div style={{
+                padding: "12px 16px", borderRadius: 12, marginBottom: 16,
+                background: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.3)",
+                whiteSpace: "pre-line", fontSize: 13, lineHeight: 1.6, color: "var(--warning)"
+              }}>
+                ⚠️ {warning}
+              </div>
+            )}
 
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <button
