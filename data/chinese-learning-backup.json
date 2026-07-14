@@ -26,6 +26,15 @@
       "category": "复杂",
       "id": "custom_1783998110988_7fw6tw",
       "createdAt": 1783998110988
+    },
+    {
+      "chinese": "书",
+      "pinyin": "shu",
+      "english": "book",
+      "example": "",
+      "category": "简单",
+      "id": "custom_1784041214120_e46gd2",
+      "createdAt": 1784041214120
     }
   ],
   "chinese_favorites": [],
