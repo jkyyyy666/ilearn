@@ -20,7 +20,6 @@ export default function GithubSyncPage() {
   const [warning, setWarning] = useState("");
   const [autoBackupEnabled, setAutoBackupEnabled] = useState(() => localStorage.getItem("cl_auto_backup") === "true");
 
-  // 注册自动备份回调
   useEffect(() => {
     setBackupCallback((result) => {
       addToast(result.message, result.success ? "success" : "error");
@@ -28,7 +27,6 @@ export default function GithubSyncPage() {
     return () => setBackupCallback(null);
   }, [addToast]);
 
-  // 自动验证已保存的 Token
   useEffect(() => {
     if (config.token && config.repo) {
       verifyToken(config.token, config.repo).then(r => {
@@ -84,6 +82,10 @@ export default function GithubSyncPage() {
     const result = await downloadBackup();
     addToast(result.message, result.success ? "success" : "info");
     setIsLoading(false);
+    // 恢复成功后刷新页面，让 React 状态从 localStorage 重新读取
+    if (result.success) {
+      setTimeout(() => window.location.reload(), 800);
+    }
   };
 
   const toggleAutoBackup = () => {
@@ -159,7 +161,6 @@ export default function GithubSyncPage() {
               </div>
             </div>
 
-            {/* 权限警告 */}
             {warning && (
               <div style={{
                 padding: "12px 16px", borderRadius: 12, marginBottom: 16,
