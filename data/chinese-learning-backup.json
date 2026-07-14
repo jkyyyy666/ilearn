@@ -8,6 +8,15 @@
       "category": "简单",
       "id": "custom_1783997986641_cl9sag",
       "createdAt": 1783997986641
+    },
+    {
+      "chinese": "黄色",
+      "pinyin": "huangse",
+      "english": "yellow",
+      "example": "黄色的香蕉",
+      "category": "简单",
+      "id": "custom_1783998051008_ma3zhb",
+      "createdAt": 1783998051008
     }
   ],
   "chinese_favorites": [],
