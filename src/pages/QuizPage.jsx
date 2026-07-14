@@ -1,6 +1,7 @@
 ﻿import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useWords } from "../context/WordContext";
+import { useRef } from "react";
 import ToastContainer, { useToastManager } from "../components/Toast";
 import { recordActivity } from "../utils/streak";
 import { isGithubConfigured, autoBackup } from "../utils/githubSync";
@@ -17,6 +18,7 @@ export default function QuizPage() {
   const isChinese = lang === "chinese";
   const words = useWords();
   const [toasts, setToasts] = useState([]);
+  const countsRef = useRef({ known: 0, unknown: 0 });
   const { addToast } = useToastManager(setToasts);
 
   const [quizWords, setQuizWords] = useState([]);
@@ -67,6 +69,7 @@ export default function QuizPage() {
     words.addKnownWord(lang, word);
 
     setKnownCount((prev) => prev + 1);
+    countsRef.current.known++;
     setLastAction({ type: "known", word });
 
     setTimeout(() => {
@@ -76,8 +79,10 @@ export default function QuizPage() {
       } else {
         window.dispatchEvent(new CustomEvent("pet-feed"));
         recordActivity();
+        words.addQuizRecord(lang, { correct: countsRef.current.known, total: countsRef.current.known + countsRef.current.unknown });
         if (isGithubConfigured()) autoBackup();
         setIsFinished(true);
+        countsRef.current = { known: 0, unknown: 0 };
       }
     }, 400);
   }, [currentIndex, quizWords, wrongIds, words, lang]);
@@ -93,6 +98,7 @@ export default function QuizPage() {
     }
 
     setUnknownCount((prev) => prev + 1);
+    countsRef.current.unknown++;
     setLastAction({ type: "unknown", word });
 
     setTimeout(() => {
@@ -102,8 +108,10 @@ export default function QuizPage() {
       } else {
         window.dispatchEvent(new CustomEvent("pet-feed"));
         recordActivity();
+        words.addQuizRecord(lang, { correct: countsRef.current.known, total: countsRef.current.known + countsRef.current.unknown });
         if (isGithubConfigured()) autoBackup();
         setIsFinished(true);
+        countsRef.current = { known: 0, unknown: 0 };
       }
     }, 400);
   }, [currentIndex, quizWords, words, lang]);
