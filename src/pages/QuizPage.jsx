@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { useWords } from "../context/WordContext";
 import ToastContainer, { useToastManager } from "../components/Toast";
 import { recordActivity } from "../utils/streak";
+import { isGithubConfigured, uploadBackup } from "../utils/githubSync";
 import EmptyState from "../components/EmptyState";
 
 /**
@@ -82,6 +83,7 @@ export default function QuizPage() {
       } else {
         window.dispatchEvent(new CustomEvent("pet-feed"));
         recordActivity();
+        if (isGithubConfigured()) uploadBackup();
         setIsFinished(true);
       }
     }, 400);

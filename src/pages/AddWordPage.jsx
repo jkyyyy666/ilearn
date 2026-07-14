@@ -3,6 +3,7 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 import { useWords } from "../context/WordContext";
 import ToastContainer, { useToastManager } from "../components/Toast";
 import { recordActivity } from "../utils/streak";
+import { isGithubConfigured, uploadBackup } from "../utils/githubSync";
 
 /**
  * 添加单词页面
@@ -84,6 +85,7 @@ export default function AddWordPage() {
 
     words.addWord(lang, wordData);
     recordActivity();
+    if (isGithubConfigured() && localStorage.getItem("cl_auto_backup") === "true") uploadBackup();
     window.dispatchEvent(new CustomEvent("pet-feed"));
     addToast("单词已添加！", "success");
 

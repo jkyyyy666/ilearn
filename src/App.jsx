@@ -10,6 +10,7 @@ import QuizPage from "./pages/QuizPage";
 import WrongBookPage from "./pages/WrongBookPage";
 import KnownWordsPage from "./pages/KnownWordsPage";
 import StatsPage from "./pages/StatsPage";
+import GithubSyncPage from "./pages/GithubSyncPage";
 
 /**
  * 应用根组件
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="known" element={<KnownWordsPage />} />
           <Route path="wrong" element={<WrongBookPage />} />
           <Route path="stats" element={<StatsPage />} />
+          <Route path="sync" element={<GithubSyncPage />} />
         </Route>
 
         {/* 英文学习 */}
@@ -45,6 +47,7 @@ export default function App() {
           <Route path="known" element={<KnownWordsPage />} />
           <Route path="wrong" element={<WrongBookPage />} />
           <Route path="stats" element={<StatsPage />} />
+          <Route path="sync" element={<GithubSyncPage />} />
         </Route>
       </Route>
 

@@ -21,6 +21,7 @@ export default function LanguageLayout() {
     { to: `/${lang}/known`, icon: "✅", label: "已认识" },
     { to: `/${lang}/wrong`, icon: "📝", label: "错题" },
     { to: `/${lang}/stats`, icon: "📊", label: "统计" },
+    { to: `/${lang}/sync`, icon: "☁️", label: "云同步" },
   ];
 
   return (

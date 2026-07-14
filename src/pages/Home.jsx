@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ToastContainer, { useToastManager } from "../components/Toast";
 import StarBackground from "../components/StarBackground";
 import { recordActivity, calculateStreak } from "../utils/streak";
+import { isGithubConfigured, downloadBackup } from "../utils/githubSync";
 
 /**
  * 首页
@@ -21,6 +22,14 @@ export default function Home() {
   useEffect(() => {
     recordActivity();
     setStreak(calculateStreak());
+    // 从 GitHub 恢复数据
+    if (isGithubConfigured()) {
+      downloadBackup().then(r => {
+        if (r.success) {
+          setStreak(calculateStreak());
+        }
+      });
+    }
   }, []);
 
   return (
