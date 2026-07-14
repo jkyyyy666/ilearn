@@ -74,6 +74,16 @@ async function githubApi(path, method, body, token) {
   return res.json();
 }
 
+/** 获取备份文件的 SHA（用于更新已有文件） */
+async function getBackupFileSha(owner, repo, token) {
+  try {
+    const res = await githubApi("/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE, "GET", null, token);
+    return res.sha;
+  } catch {
+    return null;
+  }
+}
+
 function parseRepo(repoStr) {
   const parts = repoStr.split("/").filter(Boolean);
   const repo = (parts[parts.length - 1] || "").replace(/\.git$/, "").replace(/\/$/, "");
@@ -83,18 +93,10 @@ function parseRepo(repoStr) {
 
 function getFriendlyError(e) {
   const msg = e.message || "";
-  if (msg.includes("404")) {
-    return "仓库访问失败（404）：Token 缺少仓库写入权限，请在 GitHub Token 设置中勾选 repo 或 public_repo 权限";
-  }
-  if (msg.includes("401")) {
-    return "Token 认证失败：Token 已过期或无效，请重新创建";
-  }
-  if (msg.includes("403")) {
-    return "GitHub API 访问被拒：Token 权限不足或触发频率限制，请检查 Token 权限或稍后重试";
-  }
-  if (msg.includes("422")) {
-    return "数据提交失败：备份文件格式问题，请联系开发者";
-  }
+  if (msg.includes("404")) return "仓库访问失败（404）：Token 缺少仓库写入权限，请在 Token 设置中勾选 public_repo 权限";
+  if (msg.includes("401")) return "Token 认证失败：Token 已过期或无效，请重新创建";
+  if (msg.includes("403")) return "GitHub API 访问被拒：Token 权限不足或触发频率限制，请稍后重试";
+  if (msg.includes("422")) return "数据提交失败：备份文件格式问题，请联系开发者";
   return msg;
 }
 
@@ -144,19 +146,13 @@ export async function verifyToken(token, repoStr) {
   try {
     const res = await githubApi("/user", "GET", null, token);
     if (!repoStr) return { valid: true, login: res.login, msg: "" };
-
-    // 额外验证 Token 对仓库的访问权限
     const { owner, repo } = parseRepo(repoStr);
     if (owner && repo) {
       try {
         await githubApi("/repos/" + owner + "/" + repo, "GET", null, token);
         return { valid: true, login: res.login, msg: "" };
       } catch {
-        return {
-          valid: true,
-          login: res.login,
-          msg: "Token 验证通过，但无法访问仓库「" + owner + "/" + repo + "」\n\n请确保：\n1. Token 有 repo 或 public_repo 权限\n2. 仓库地址填写正确\n3. 仓库存在且是公开的"
-        };
+        return { valid: true, login: res.login, msg: "Token 验证通过，但无法访问仓库「" + owner + "/" + repo + "」\n\n请确保：\n1. Token 有 repo 或 public_repo 权限\n2. 仓库地址填写正确\n3. 仓库存在且是公开的" };
       }
     }
     return { valid: true, login: res.login, msg: "" };
