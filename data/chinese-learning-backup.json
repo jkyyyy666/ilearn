@@ -1,18 +1,6 @@
 {
-  "chinese_words": [
-    {
-      "chinese": "学习",
-      "pinyin": "xuexi",
-      "english": "study",
-      "example": "我要学习中文",
-      "category": "简单",
-      "id": "custom_1783925174196_6lto3j",
-      "createdAt": 1783925174196
-    }
-  ],
-  "chinese_favorites": [
-    "custom_1783925174196_6lto3j"
-  ],
+  "chinese_words": [],
+  "chinese_favorites": [],
   "chinese_wrong_words": [],
   "chinese_known_words": [
     {
