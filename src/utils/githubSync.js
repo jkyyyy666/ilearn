@@ -74,7 +74,7 @@ async function githubApi(path, method, body, token) {
   return res.json();
 }
 
-/** 获取备份文件的 SHA（用于更新已有文件） */
+/** 获取备份文件的 SHA */
 async function getBackupFileSha(owner, repo, token) {
   try {
     const res = await githubApi("/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE, "GET", null, token);
@@ -100,11 +100,22 @@ function getFriendlyError(e) {
   return msg;
 }
 
-export async function uploadBackup() {
+function getConfig() {
+  return { config: getGithubConfig(), owner: null, repo: null };
+}
+
+function resolveConfig() {
   const config = getGithubConfig();
-  if (!config) return { success: false, message: "未配置 GitHub" };
+  if (!config) return null;
   const { owner, repo } = parseRepo(config.repo);
-  if (!owner || !repo) return { success: false, message: "仓库地址格式错误" };
+  if (!owner || !repo) return null;
+  return { config, owner, repo };
+}
+
+export async function uploadBackup() {
+  const ctx = resolveConfig();
+  if (!ctx) return { success: false, message: "未配置 GitHub 或仓库地址格式错误" };
+  const { owner, repo, config } = ctx;
   try {
     const backupData = collectBackupData();
     const jsonStr = JSON.stringify(backupData, null, 2);
@@ -124,10 +135,9 @@ export async function uploadBackup() {
 }
 
 export async function downloadBackup() {
-  const config = getGithubConfig();
-  if (!config) return { success: false, message: "未配置 GitHub" };
-  const { owner, repo } = parseRepo(config.repo);
-  if (!owner || !repo) return { success: false, message: "仓库地址格式错误" };
+  const ctx = resolveConfig();
+  if (!ctx) return { success: false, message: "未配置 GitHub 或仓库地址格式错误" };
+  const { owner, repo, config } = ctx;
   try {
     const res = await githubApi("/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE, "GET", null, config.token);
     const rawContent = (res.content || "").replace(/\n/g, "");
@@ -158,6 +168,61 @@ export async function verifyToken(token, repoStr) {
     return { valid: true, login: res.login, msg: "" };
   } catch {
     return { valid: false, login: null, msg: "Token 无效，无法连接 GitHub" };
+  }
+}
+
+/**
+ * 选择性删除云端备份中的指定数据项
+ * @param {string[]} keysToRemove - 要删除的数据键名数组
+ * @returns {Promise<{success: boolean, message: string}>}
+ */
+export async function deleteBackupData(keysToRemove) {
+  const ctx = resolveConfig();
+  if (!ctx) return { success: false, message: "未配置 GitHub 或仓库地址格式错误" };
+  if (!keysToRemove || keysToRemove.length === 0) return { success: false, message: "请选择要清除的数据类型" };
+
+  const { owner, repo, config } = ctx;
+
+  try {
+    // 1. 下载当前备份
+    let existingData = {};
+    let fileSha = null;
+    try {
+      const res = await githubApi("/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE, "GET", null, config.token);
+      fileSha = res.sha;
+      const rawContent = (res.content || "").replace(/\n/g, "");
+      existingData = JSON.parse(decodeURIComponent(escape(atob(rawContent))));
+    } catch {
+      return { success: false, message: "云端暂无备份数据" };
+    }
+
+    // 2. 删除选中的数据键
+    const labels = {
+      chinese_words: "中文单词", chinese_favorites: "中文收藏", chinese_wrong_words: "中文错题",
+      chinese_known_words: "中文已认识", chinese_quiz_history: "中文测验记录",
+      english_words: "英文单词", english_favorites: "英文收藏", english_wrong_words: "英文错题",
+      english_known_words: "英文已认识", english_quiz_history: "英文测验记录",
+      cl_streak_dates: "学习天数", cl_daily_goal: "每日目标"
+    };
+
+    const removedLabels = [];
+    keysToRemove.forEach(k => {
+      if (k in existingData) {
+        delete existingData[k];
+        removedLabels.push(labels[k] || k);
+      }
+    });
+
+    // 3. 重新上传
+    const jsonStr = JSON.stringify(existingData, null, 2);
+    const content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const body = { message: "清除指定备份数据: " + removedLabels.join(", "), content: content, sha: fileSha };
+    await githubApi("/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE, "PUT", body, config.token);
+
+    return { success: true, message: "已从云端清除: " + removedLabels.join("、") };
+  } catch (e) {
+    console.error("[GitHub Sync] 清除失败:", e);
+    return { success: false, message: getFriendlyError(e) };
   }
 }
 

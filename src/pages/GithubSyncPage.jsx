@@ -3,13 +3,24 @@ import ToastContainer, { useToastManager } from "../components/Toast";
 import {
   getGithubConfig, saveGithubConfig, clearGithubConfig,
   isGithubConfigured, verifyToken,
-  uploadBackup, downloadBackup, setBackupCallback
+  uploadBackup, downloadBackup, deleteBackupData, setBackupCallback
 } from "../utils/githubSync";
 
-/**
- * GitHub 数据同步页面
- * 支持登录/登出/手动备份/恢复/自动备份
- */
+const BACKUP_KEYS = [
+  { key: "chinese_words", label: "🇨🇳 中文单词", group: "中文" },
+  { key: "chinese_favorites", label: "⭐ 中文收藏", group: "中文" },
+  { key: "chinese_wrong_words", label: "📛 中文错题", group: "中文" },
+  { key: "chinese_known_words", label: "✅ 中文已认识", group: "中文" },
+  { key: "chinese_quiz_history", label: "📊 中文测验记录", group: "中文" },
+  { key: "english_words", label: "🇺🇸 英文单词", group: "英文" },
+  { key: "english_favorites", label: "⭐ 英文收藏", group: "英文" },
+  { key: "english_wrong_words", label: "📛 英文错题", group: "英文" },
+  { key: "english_known_words", label: "✅ 英文已认识", group: "英文" },
+  { key: "english_quiz_history", label: "📊 英文测验记录", group: "英文" },
+  { key: "cl_streak_dates", label: "🔥 学习天数", group: "其他" },
+  { key: "cl_daily_goal", label: "🎯 每日目标", group: "其他" },
+];
+
 export default function GithubSyncPage() {
   const [toasts, setToasts] = useState([]);
   const { addToast } = useToastManager(setToasts);
@@ -19,6 +30,10 @@ export default function GithubSyncPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [warning, setWarning] = useState("");
   const [autoBackupEnabled, setAutoBackupEnabled] = useState(() => localStorage.getItem("cl_auto_backup") === "true");
+
+  // 清空云端状态
+  const [showClearPanel, setShowClearPanel] = useState(false);
+  const [clearSelections, setClearSelections] = useState({});
 
   useEffect(() => {
     setBackupCallback((result) => {
@@ -82,7 +97,6 @@ export default function GithubSyncPage() {
     const result = await downloadBackup();
     addToast(result.message, result.success ? "success" : "info");
     setIsLoading(false);
-    // 恢复成功后刷新页面，让 React 状态从 localStorage 重新读取
     if (result.success) {
       setTimeout(() => window.location.reload(), 800);
     }
@@ -93,6 +107,33 @@ export default function GithubSyncPage() {
     setAutoBackupEnabled(newVal);
     localStorage.setItem("cl_auto_backup", String(newVal));
     addToast(newVal ? "自动备份已开启 🔄" : "自动备份已关闭", "info");
+  };
+
+  // 清空云端操作
+  const toggleClearItem = (key) => {
+    setClearSelections((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const selectAllClear = () => {
+    const all = {};
+    BACKUP_KEYS.forEach((item) => { all[item.key] = true; });
+    setClearSelections(all);
+  };
+
+  const deselectAllClear = () => {
+    setClearSelections({});
+  };
+
+  const handleClearBackup = async () => {
+    const selected = Object.entries(clearSelections).filter(([, v]) => v).map(([k]) => k);
+    if (selected.length === 0) {
+      addToast("请先选择要清除的数据类型", "warning");
+      return;
+    }
+    setIsLoading(true);
+    const result = await deleteBackupData(selected);
+    addToast(result.message, result.success ? "success" : "error");
+    setIsLoading(false);
   };
 
   return (
@@ -112,13 +153,8 @@ export default function GithubSyncPage() {
 
             <div className="input-group" style={{ marginBottom: 14 }}>
               <label>GitHub Token *</label>
-              <input
-                className="input-field"
-                type="password"
-                value={config.token}
-                onChange={e => setConfig(c => ({ ...c, token: e.target.value }))}
-                placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
-              />
+              <input className="input-field" type="password" value={config.token}
+                onChange={e => setConfig(c => ({ ...c, token: e.target.value }))} placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
               <div style={{ fontSize: 11, color: "var(--text-tertiary)", marginTop: 4 }}>
                 GitHub Settings → Developer settings → Personal access tokens → 创建 Token
               </div>
@@ -126,102 +162,94 @@ export default function GithubSyncPage() {
 
             <div className="input-group" style={{ marginBottom: 14 }}>
               <label>仓库地址 *</label>
-              <input
-                className="input-field"
-                value={config.repo}
-                onChange={e => setConfig(c => ({ ...c, repo: e.target.value }))}
-                placeholder="jkyyyy666/ilearn"
-              />
+              <input className="input-field" value={config.repo}
+                onChange={e => setConfig(c => ({ ...c, repo: e.target.value }))} placeholder="jkyyyy666/ilearn" />
               <div style={{ fontSize: 11, color: "var(--text-tertiary)", marginTop: 4 }}>
                 格式：用户名/仓库名，如 jkyyyy666/ilearn
               </div>
             </div>
 
-            <button
-              className="btn btn-primary"
-              onClick={handleLogin}
-              disabled={isLoading}
-              style={{ width: "100%", marginTop: 8 }}
-            >
+            <button className="btn btn-primary" onClick={handleLogin} disabled={isLoading} style={{ width: "100%", marginTop: 8 }}>
               {isLoading ? "验证中..." : "🔆 连接 GitHub"}
             </button>
           </>
         ) : (
           <>
-            <div style={{
-              textAlign: "center", padding: 16, borderRadius: 12,
-              background: "rgba(16, 185, 129, 0.1)", marginBottom: 16
-            }}>
+            <div style={{ textAlign: "center", padding: 16, borderRadius: 12, background: "rgba(16, 185, 129, 0.1)", marginBottom: 16 }}>
               <div style={{ fontSize: 36, marginBottom: 4 }}>✅</div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: "var(--success)" }}>
-                已连接 GitHub
-              </div>
-              <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 2 }}>
-                {userInfo} / {config.repo}
-              </div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: "var(--success)" }}>已连接 GitHub</div>
+              <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 2 }}>{userInfo} / {config.repo}</div>
             </div>
 
             {warning && (
-              <div style={{
-                padding: "12px 16px", borderRadius: 12, marginBottom: 16,
-                background: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.3)",
-                whiteSpace: "pre-line", fontSize: 13, lineHeight: 1.6, color: "var(--warning)"
-              }}>
+              <div style={{ padding: "12px 16px", borderRadius: 12, marginBottom: 16, background: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.3)", whiteSpace: "pre-line", fontSize: 13, lineHeight: 1.6, color: "var(--warning)" }}>
                 ⚠️ {warning}
               </div>
             )}
 
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <button
-                className="btn btn-primary"
-                onClick={handleBackup}
-                disabled={isLoading}
-              >
+              <button className="btn btn-primary" onClick={handleBackup} disabled={isLoading}>
                 {isLoading ? "上传中..." : "📛 手动备份到 GitHub"}
               </button>
-
-              <button
-                className="btn"
-                onClick={handleRestore}
-                disabled={isLoading}
-                style={{
-                  padding: "12px 20px", border: "2px solid var(--border)",
-                  borderRadius: 12, cursor: "pointer", fontWeight: 600,
-                  background: "var(--bg-card)", color: "var(--text)",
-                }}
-              >
+              <button className="btn" onClick={handleRestore} disabled={isLoading} style={{ padding: "12px 20px", border: "2px solid var(--border)", borderRadius: 12, cursor: "pointer", fontWeight: 600, background: "var(--bg-card)", color: "var(--text)" }}>
                 {isLoading ? "下载中..." : "📜 从 GitHub 恢复"}
               </button>
 
-              <label style={{
-                display: "flex", alignItems: "center", gap: 10,
-                padding: "12px 16px", borderRadius: 12,
-                background: "var(--bg-secondary)", cursor: "pointer",
-              }}>
-                <input
-                  type="checkbox"
-                  checked={autoBackupEnabled}
-                  onChange={toggleAutoBackup}
-                  style={{ width: 18, height: 18 }}
-                />
+              <label style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", borderRadius: 12, background: "var(--bg-secondary)", cursor: "pointer" }}>
+                <input type="checkbox" checked={autoBackupEnabled} onChange={toggleAutoBackup} style={{ width: 18, height: 18 }} />
                 <div>
                   <div style={{ fontSize: 14, fontWeight: 600 }}>自动备份</div>
-                  <div style={{ fontSize: 12, color: "var(--text-tertiary)" }}>
-                    每次添加单词或完成测验时自动备份
-                  </div>
+                  <div style={{ fontSize: 12, color: "var(--text-tertiary)" }}>每次添加单词或完成测验时自动备份</div>
                 </div>
               </label>
+
+              {/* 清空云端备份 */}
+              <div style={{ borderTop: "1px solid var(--border)", paddingTop: 12, marginTop: 4 }}>
+                <button className="btn btn-sm" onClick={() => setShowClearPanel(!showClearPanel)}
+                  style={{ width: "100%", background: "rgba(239, 68, 68, 0.08)", color: "var(--danger)", border: "1px solid rgba(239, 68, 68, 0.2)", borderRadius: 10, padding: "8px" }}>
+                  🗑️ {showClearPanel ? "收起" : "清空云端备份"}
+                </button>
+
+                {showClearPanel && (
+                  <div style={{ marginTop: 12 }}>
+                    <p style={{ fontSize: 12, color: "var(--text-tertiary)", marginBottom: 10, lineHeight: 1.5 }}>
+                      选择要清空的数据类型，这些数据将从云端备份中移除（本地数据不受影响）。
+                    </p>
+
+                    {/* 全选/取消 */}
+                    <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+                      <button className="btn btn-sm btn-secondary" onClick={selectAllClear}>全选</button>
+                      <button className="btn btn-sm btn-secondary" onClick={deselectAllClear}>取消选择</button>
+                    </div>
+
+                    {/* 按分组列出 */}
+                    {["中文", "英文", "其他"].map((group) => {
+                      const items = BACKUP_KEYS.filter((i) => i.group === group);
+                      return (
+                        <div key={group} style={{ marginBottom: 8 }}>
+                          <div style={{ fontSize: 11, fontWeight: 600, color: "var(--text-tertiary)", marginBottom: 4, textTransform: "uppercase", letterSpacing: 1 }}>{group}</div>
+                          {items.map((item) => (
+                            <label key={item.key} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 8px", borderRadius: 8, cursor: "pointer", fontSize: 13, transition: "background 0.15s" }}
+                              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.03)"}
+                              onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>
+                              <input type="checkbox" checked={!!clearSelections[item.key]} onChange={() => toggleClearItem(item.key)} style={{ width: 15, height: 15 }} />
+                              {item.label}
+                            </label>
+                          ))}
+                        </div>
+                      );
+                    })}
+
+                    <button className="btn btn-sm btn-danger" onClick={handleClearBackup} disabled={isLoading}
+                      style={{ width: "100%", marginTop: 6 }}>
+                      {isLoading ? "处理中..." : "🗑️ 清空选中的云端数据"}
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
 
-            <button
-              className="btn"
-              onClick={handleLogout}
-              style={{
-                width: "100%", marginTop: 16, padding: "10px",
-                background: "none", border: "1px solid var(--danger)",
-                color: "var(--danger)", borderRadius: 10, cursor: "pointer", fontSize: 13,
-              }}
-            >
+            <button className="btn" onClick={handleLogout} style={{ width: "100%", marginTop: 16, padding: "10px", background: "none", border: "1px solid var(--danger)", color: "var(--danger)", borderRadius: 10, cursor: "pointer", fontSize: 13 }}>
               退出登录
             </button>
           </>
