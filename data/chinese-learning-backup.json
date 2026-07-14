@@ -1,4 +1,24 @@
 {
+  "chinese_words": [
+    {
+      "chinese": "学习",
+      "pinyin": "xuexi",
+      "english": "study",
+      "example": "我要学习",
+      "category": "简单",
+      "id": "custom_1783996905335_f22lfz",
+      "createdAt": 1783996905335
+    },
+    {
+      "chinese": "你好",
+      "pinyin": "nihao",
+      "english": "hello",
+      "example": "你真好",
+      "category": "常用",
+      "id": "custom_1783996920664_xqjsn3",
+      "createdAt": 1783996920664
+    }
+  ],
   "chinese_favorites": [
     "custom_1783996905335_f22lfz",
     "custom_1783996920664_xqjsn3"
