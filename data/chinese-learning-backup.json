@@ -1,1 +1,33 @@
-{"test":true,"time":1783996097813}
+{
+  "chinese_words": [
+    {
+      "chinese": "学习",
+      "pinyin": "xuexi",
+      "english": "study",
+      "example": "我要学习中文",
+      "category": "简单",
+      "id": "custom_1783925174196_6lto3j",
+      "createdAt": 1783925174196
+    }
+  ],
+  "chinese_favorites": [
+    "custom_1783925174196_6lto3j"
+  ],
+  "chinese_wrong_words": [],
+  "chinese_known_words": [
+    {
+      "chinese": "学习",
+      "pinyin": "xuexi",
+      "english": "study",
+      "example": "我要学习中文",
+      "category": "简单",
+      "id": "custom_1783925174196_6lto3j",
+      "createdAt": 1783925174196,
+      "knownAt": 1783934936444
+    }
+  ],
+  "cl_streak_dates": [
+    "2026-07-14"
+  ],
+  "cl_daily_goal": 15
+}
