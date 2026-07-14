@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import ToastContainer, { useToastManager } from "../components/Toast";
 import {
   getGithubConfig, saveGithubConfig, clearGithubConfig,
   isGithubConfigured, verifyToken,
-  uploadBackup, downloadBackup
+  uploadBackup, downloadBackup, setBackupCallback
 } from "../utils/githubSync";
 
 /**
@@ -17,8 +17,17 @@ export default function GithubSyncPage() {
   const [isVerified, setIsVerified] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [autoBackup, setAutoBackup] = useState(() => localStorage.getItem("cl_auto_backup") === "true");
+  const [autoBackupEnabled, setAutoBackupEnabled] = useState(() => localStorage.getItem("cl_auto_backup") === "true");
 
+  // 注册自动备份回调，在自动备份完成时显示 Toast
+  useEffect(() => {
+    setBackupCallback((result) => {
+      addToast(result.message, result.success ? "success" : "error");
+    });
+    return () => setBackupCallback(null);
+  }, [addToast]);
+
+  // 自动验证已保存的 Token
   useEffect(() => {
     if (config.token && config.repo) {
       verifyToken(config.token).then(r => {
@@ -69,8 +78,8 @@ export default function GithubSyncPage() {
   };
 
   const toggleAutoBackup = () => {
-    const newVal = !autoBackup;
-    setAutoBackup(newVal);
+    const newVal = !autoBackupEnabled;
+    setAutoBackupEnabled(newVal);
     localStorage.setItem("cl_auto_backup", String(newVal));
     addToast(newVal ? "自动备份已开启 🔄" : "自动备份已关闭", "info");
   };
@@ -81,13 +90,13 @@ export default function GithubSyncPage() {
 
       <div className="card" style={{ maxWidth: 400, margin: "0 auto" }}>
         <h3 style={{ fontSize: 17, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>
-          🔐 GitHub 数据同步
+          🔄 GitHub 数据同步
         </h3>
 
         {!isVerified ? (
           <>
             <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 16, lineHeight: 1.6 }}>
-              配置 GitHub Token 后，你的单词数据会自动备份到仓库，换浏览器也不会丢失 🚀
+              配置 GitHub Token 后，你的单词数据会自动备份到仓库，换浏览器也不会丢失 🎯
             </p>
 
             <div className="input-group" style={{ marginBottom: 14 }}>
@@ -100,7 +109,7 @@ export default function GithubSyncPage() {
                 placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
               />
               <div style={{ fontSize: 11, color: "var(--text-tertiary)", marginTop: 4 }}>
-                需要在 GitHub Settings → Developer settings → Personal access tokens 创建
+                需在 GitHub Settings → Developer settings → Personal access tokens 创建
               </div>
             </div>
 
@@ -123,18 +132,14 @@ export default function GithubSyncPage() {
               disabled={isLoading}
               style={{ width: "100%", marginTop: 8 }}
             >
-              {isLoading ? "验证中..." : "🔗 连接 GitHub"}
+              {isLoading ? "验证中..." : "🔆 连接 GitHub"}
             </button>
           </>
         ) : (
           <>
-            {/* 已登录状态 */}
             <div style={{
-              textAlign: "center",
-              padding: 16,
-              borderRadius: 12,
-              background: "rgba(16, 185, 129, 0.1)",
-              marginBottom: 16
+              textAlign: "center", padding: 16, borderRadius: 12,
+              background: "rgba(16, 185, 129, 0.1)", marginBottom: 16
             }}>
               <div style={{ fontSize: 36, marginBottom: 4 }}>✅</div>
               <div style={{ fontSize: 14, fontWeight: 600, color: "var(--success)" }}>
@@ -145,14 +150,13 @@ export default function GithubSyncPage() {
               </div>
             </div>
 
-            {/* 操作按钮 */}
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <button
                 className="btn btn-primary"
                 onClick={handleBackup}
                 disabled={isLoading}
               >
-                {isLoading ? "上传中..." : "📤 手动备份到 GitHub"}
+                {isLoading ? "上传中..." : "📛 手动备份到 GitHub"}
               </button>
 
               <button
@@ -160,30 +164,22 @@ export default function GithubSyncPage() {
                 onClick={handleRestore}
                 disabled={isLoading}
                 style={{
-                  padding: "12px 20px",
-                  border: "2px solid var(--border)",
-                  borderRadius: 12,
-                  cursor: "pointer",
-                  fontWeight: 600,
-                  background: "var(--bg-card)",
-                  color: "var(--text)",
+                  padding: "12px 20px", border: "2px solid var(--border)",
+                  borderRadius: 12, cursor: "pointer", fontWeight: 600,
+                  background: "var(--bg-card)", color: "var(--text)",
                 }}
               >
-                {isLoading ? "下载中..." : "📥 从 GitHub 恢复"}
+                {isLoading ? "下载中..." : "📜 从 GitHub 恢复"}
               </button>
 
               <label style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "12px 16px",
-                borderRadius: 12,
-                background: "var(--bg-secondary)",
-                cursor: "pointer",
+                display: "flex", alignItems: "center", gap: 10,
+                padding: "12px 16px", borderRadius: 12,
+                background: "var(--bg-secondary)", cursor: "pointer",
               }}>
                 <input
                   type="checkbox"
-                  checked={autoBackup}
+                  checked={autoBackupEnabled}
                   onChange={toggleAutoBackup}
                   style={{ width: 18, height: 18 }}
                 />
@@ -200,15 +196,9 @@ export default function GithubSyncPage() {
               className="btn"
               onClick={handleLogout}
               style={{
-                width: "100%",
-                marginTop: 16,
-                padding: "10px",
-                background: "none",
-                border: "1px solid var(--danger)",
-                color: "var(--danger)",
-                borderRadius: 10,
-                cursor: "pointer",
-                fontSize: 13,
+                width: "100%", marginTop: 16, padding: "10px",
+                background: "none", border: "1px solid var(--danger)",
+                color: "var(--danger)", borderRadius: 10, cursor: "pointer", fontSize: 13,
               }}
             >
               退出登录

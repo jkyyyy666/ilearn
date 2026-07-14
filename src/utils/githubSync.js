@@ -1,4 +1,4 @@
-/**
+﻿/**
  * GitHub 数据同步服务
  * 将 LocalStorage 数据备份到 GitHub 仓库
  * 使用 Personal Access Token (PAT) 认证
@@ -7,16 +7,10 @@
 const GITHUB_CONFIG_KEY = "cl_github_config";
 const BACKUP_FILE = "data/chinese-learning-backup.json";
 
-/**
- * 保存 GitHub 配置
- */
 export function saveGithubConfig(config) {
   localStorage.setItem(GITHUB_CONFIG_KEY, JSON.stringify(config));
 }
 
-/**
- * 获取 GitHub 配置
- */
 export function getGithubConfig() {
   try {
     const raw = localStorage.getItem(GITHUB_CONFIG_KEY);
@@ -24,24 +18,15 @@ export function getGithubConfig() {
   } catch { return null; }
 }
 
-/**
- * 清除 GitHub 配置（退出登录）
- */
 export function clearGithubConfig() {
   localStorage.removeItem(GITHUB_CONFIG_KEY);
 }
 
-/**
- * 是否已配置 GitHub
- */
 export function isGithubConfigured() {
   const config = getGithubConfig();
   return config && config.token && config.repo;
 }
 
-/**
- * 收集所有需要备份的数据
- */
 function collectBackupData() {
   const keys = [
     "chinese_words", "chinese_favorites", "chinese_wrong_words", "chinese_known_words", "chinese_quiz_history",
@@ -58,9 +43,6 @@ function collectBackupData() {
   return data;
 }
 
-/**
- * 将备份数据写入 localStorage
- */
 function restoreBackupData(data) {
   Object.entries(data).forEach(([key, value]) => {
     try {
@@ -71,9 +53,6 @@ function restoreBackupData(data) {
   });
 }
 
-/**
- * 调用 GitHub API
- */
 async function githubApi(path, method, body, token) {
   const url = "https://api.github.com" + path;
   const headers = {
@@ -95,101 +74,67 @@ async function githubApi(path, method, body, token) {
   return res.json();
 }
 
-/**
- * 获取仓库中备份文件的 SHA（用于更新文件）
- */
 async function getBackupFileSha(owner, repo, token) {
   try {
     const res = await githubApi(
       "/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE,
-      "GET",
-      null,
-      token
+      "GET", null, token
     );
     return res.sha;
   } catch {
-    return null; // 文件还不存在
+    return null;
   }
 }
 
-/**
- * 上传备份到 GitHub
- * @returns {Promise<{success: boolean, message: string}>}
- */
+function parseRepo(repoStr) {
+  const parts = repoStr.split("/").filter(Boolean);
+  const repo = (parts[parts.length - 1] || "").replace(/\.git$/, "").replace(/\/$/, "");
+  const owner = parts[parts.length - 2] || "";
+  return { owner, repo };
+}
+
 export async function uploadBackup() {
   const config = getGithubConfig();
   if (!config) return { success: false, message: "未配置 GitHub" };
-
-  const [owner, repo] = config.repo.split("/").slice(-2);
+  const { owner, repo } = parseRepo(config.repo);
   if (!owner || !repo) return { success: false, message: "仓库地址格式错误" };
-
   try {
     const backupData = collectBackupData();
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(backupData, null, 2))));
-
+    const jsonStr = JSON.stringify(backupData, null, 2);
+    const content = btoa(unescape(encodeURIComponent(jsonStr)));
     const existingSha = await getBackupFileSha(owner, repo, config.token);
-
-    const body = {
-      message: "备份学习数据 - " + new Date().toLocaleString("zh-CN"),
-      content: content,
-    };
+    const body = { message: "备份学习数据 - " + new Date().toLocaleString("zh-CN"), content: content };
     if (existingSha) body.sha = existingSha;
-
-    // 确保目录存在
     try {
-      await githubApi(
-        "/repos/" + owner + "/" + repo + "/contents/data/.gitkeep",
-        "PUT",
-        { message: "初始化数据目录", content: btoa("") },
-        config.token
-      );
+      await githubApi("/repos/" + owner + "/" + repo + "/contents/data/.gitkeep", "PUT", { message: "初始化数据目录", content: btoa("") }, config.token);
     } catch {}
-
-    await githubApi(
-      "/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE,
-      "PUT",
-      body,
-      config.token
-    );
-
-    return { success: true, message: "备份成功！" };
+    await githubApi("/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE, "PUT", body, config.token);
+    return { success: true, message: "备份成功！共 " + Object.keys(backupData).length + " 项数据已同步" };
   } catch (e) {
+    console.error("[GitHub Sync] 备份失败:", e);
     return { success: false, message: "备份失败: " + e.message };
   }
 }
 
-/**
- * 从 GitHub 恢复备份
- * @returns {Promise<{success: boolean, message: string}>}
- */
 export async function downloadBackup() {
   const config = getGithubConfig();
   if (!config) return { success: false, message: "未配置 GitHub" };
-
-  const [owner, repo] = config.repo.split("/").slice(-2);
+  const { owner, repo } = parseRepo(config.repo);
   if (!owner || !repo) return { success: false, message: "仓库地址格式错误" };
-
   try {
-    const res = await githubApi(
-      "/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE,
-      "GET",
-      null,
-      config.token
-    );
-
-    const decoded = decodeURIComponent(escape(atob(res.content)));
+    const res = await githubApi("/repos/" + owner + "/" + repo + "/contents/" + BACKUP_FILE, "GET", null, config.token);
+    const rawContent = (res.content || "").replace(/\n/g, "");
+    const decoded = decodeURIComponent(escape(atob(rawContent)));
     const data = JSON.parse(decoded);
     restoreBackupData(data);
-
-    return { success: true, message: "恢复成功！已加载 " + Object.keys(data).length + " 项数据" };
+    console.log("[GitHub Sync] 恢复成功:", Object.keys(data).length, "项数据");
+    return { success: true, message: "恢复成功！已加载 " + Object.keys(data).length + " 项数据", data: data };
   } catch (e) {
-    return { success: false, message: "恢复失败: " + e.message };
+    console.error("[GitHub Sync] 恢复失败:", e);
+    return { success: false, message: "恢复失败: " + e.message, data: null };
   }
 }
 
-/**
- * 验证 Token 是否有效
- */
 export async function verifyToken(token) {
   try {
     const res = await githubApi("/user", "GET", null, token);
@@ -197,4 +142,17 @@ export async function verifyToken(token) {
   } catch {
     return { valid: false, login: null };
   }
+}
+
+let _backupCallback = null;
+
+export function setBackupCallback(cb) {
+  _backupCallback = cb;
+}
+
+export async function autoBackup() {
+  if (!isGithubConfigured()) return null;
+  const result = await uploadBackup();
+  if (_backupCallback) _backupCallback(result);
+  return result;
 }
