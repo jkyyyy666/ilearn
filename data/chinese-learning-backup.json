@@ -1,40 +1,13 @@
 {
   "chinese_words": [
     {
-      "chinese": "学习",
-      "pinyin": "xuexi",
-      "english": "study",
-      "example": "我要学习",
-      "category": "简单",
-      "id": "custom_1783997986641_cl9sag",
-      "createdAt": 1783997986641
-    },
-    {
-      "chinese": "黄色",
-      "pinyin": "huangse",
-      "english": "yellow",
-      "example": "黄色的香蕉",
-      "category": "简单",
-      "id": "custom_1783998051008_ma3zhb",
-      "createdAt": 1783998051008
-    },
-    {
-      "chinese": "绿色",
-      "pinyin": "lvse",
-      "english": "green",
-      "example": "绿色的草",
-      "category": "复杂",
-      "id": "custom_1783998110988_7fw6tw",
-      "createdAt": 1783998110988
-    },
-    {
-      "chinese": "书",
-      "pinyin": "shu",
-      "english": "book",
-      "example": "",
-      "category": "简单",
-      "id": "custom_1784041214120_e46gd2",
-      "createdAt": 1784041214120
+      "chinese": "适应",
+      "pinyin": "shìyìng",
+      "english": "thích nghi, thích ứng",
+      "example": "她很快就适应了新工作。\n\nTā hěn kuài jiù shìyìng le xīn gōngzuò.",
+      "category": "常用",
+      "id": "custom_1784102250978_5epy8q",
+      "createdAt": 1784102250978
     }
   ],
   "chinese_favorites": [],
@@ -52,7 +25,8 @@
     }
   ],
   "cl_streak_dates": [
-    "2026-07-14"
+    "2026-07-14",
+    "2026-07-15"
   ],
   "cl_daily_goal": 15
 }
