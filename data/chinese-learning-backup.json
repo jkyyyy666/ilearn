@@ -26,6 +26,15 @@
       "category": "复杂",
       "id": "custom_1784102445915_qc12tp",
       "createdAt": 1784102445915
+    },
+    {
+      "chinese": "法律",
+      "pinyin": "fǎlǜ",
+      "english": "pháp luật",
+      "example": "法律面前人人平等 \nfǎlǜ miànqián rén rén píngděng",
+      "category": "复杂",
+      "id": "custom_1784102616359_m1el5v",
+      "createdAt": 1784102616359
     }
   ],
   "chinese_favorites": [],
