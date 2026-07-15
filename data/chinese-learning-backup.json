@@ -35,6 +35,15 @@
       "category": "复杂",
       "id": "custom_1784102616359_m1el5v",
       "createdAt": 1784102616359
+    },
+    {
+      "chinese": "深",
+      "pinyin": "shēn",
+      "english": "(adj) sâu (sắc), đậm (màu sắc), trừu tượng (n) độ sâu",
+      "example": "这个道理很深  \nzhège dàolǐ hěn shēn",
+      "category": "简单",
+      "id": "custom_1784102681547_3o2r2z",
+      "createdAt": 1784102681547
     }
   ],
   "chinese_favorites": [],
