@@ -17,6 +17,15 @@
       "category": "常用",
       "id": "custom_1784102328866_0drn07",
       "createdAt": 1784102328866
+    },
+    {
+      "chinese": "尽管尽管...，(但是/可是)...",
+      "pinyin": "jǐnguǎn",
+      "english": "mặc dù",
+      "example": "尽管很累，她还是继续工作。\n\nJǐnguǎn hěn lèi, tā háishì jìxù gōngzuò.",
+      "category": "复杂",
+      "id": "custom_1784102445915_qc12tp",
+      "createdAt": 1784102445915
     }
   ],
   "chinese_favorites": [],
