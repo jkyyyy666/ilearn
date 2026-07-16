@@ -98,6 +98,15 @@
       "category": "复杂",
       "id": "custom_1784197127991_l3b0cc",
       "createdAt": 1784197127991
+    },
+    {
+      "chinese": "例外",
+      "pinyin": "lìwài",
+      "english": "ngoại lệ; trường hợp ngoại lệ",
+      "example": "我不喜欢猫，这只猫是例外\nwǒ bù xǐhuan māo, zhè zhī māo shì lìwài",
+      "category": "自定义",
+      "id": "custom_1784206155346_guw7ph",
+      "createdAt": 1784206155346
     }
   ],
   "chinese_favorites": [],
