@@ -62,6 +62,15 @@
       "category": "复杂",
       "id": "custom_1784196619048_ichubt",
       "createdAt": 1784196619048
+    },
+    {
+      "chinese": "优点 # 缺点",
+      "pinyin": "yōudiǎn # quēdiǎn",
+      "english": "ưu điêm # khuyết điểm",
+      "example": "每个人都有缺点, 优点\nMěi gè rén dōu yǒu quēdiǎn, yōudiǎn",
+      "category": "简单",
+      "id": "custom_1784196836470_zysi3r",
+      "createdAt": 1784196836470
     }
   ],
   "chinese_favorites": [],
