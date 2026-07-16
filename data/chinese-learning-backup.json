@@ -53,6 +53,15 @@
       "category": "常用",
       "id": "custom_1784196559938_wx9w0z",
       "createdAt": 1784196559938
+    },
+    {
+      "chinese": "幽默",
+      "pinyin": "yōumò",
+      "english": "hài hước",
+      "example": "他很幽默，总是让大家开心。\nTā hěn yōumò, zǒngshì ràng dàjiā kāixīn.",
+      "category": "复杂",
+      "id": "custom_1784196619048_ichubt",
+      "createdAt": 1784196619048
     }
   ],
   "chinese_favorites": [],
