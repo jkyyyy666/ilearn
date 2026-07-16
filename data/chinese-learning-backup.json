@@ -71,6 +71,15 @@
       "category": "简单",
       "id": "custom_1784196836470_zysi3r",
       "createdAt": 1784196836470
+    },
+    {
+      "chinese": "羡慕",
+      "pinyin": "xiànmù",
+      "english": "ngưỡng mộ; ước ao; đố kỵ; ghen ghét",
+      "example": "我羡慕他的勇气。\nWǒ xiànmù tā de yǒngqì",
+      "category": "简单",
+      "id": "custom_1784196910908_w8mj2c",
+      "createdAt": 1784196910908
     }
   ],
   "chinese_favorites": [],
