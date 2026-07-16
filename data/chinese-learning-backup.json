@@ -107,6 +107,15 @@
       "category": "自定义",
       "id": "custom_1784206155346_guw7ph",
       "createdAt": 1784206155346
+    },
+    {
+      "chinese": "唯一",
+      "pinyin": "wéiyī",
+      "english": "độc nhất",
+      "example": "唯一无二\nwéiyī wúèr",
+      "category": "自定义",
+      "id": "custom_1784206263382_nqp06r",
+      "createdAt": 1784206263382
     }
   ],
   "chinese_favorites": [],
