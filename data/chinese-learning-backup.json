@@ -89,6 +89,15 @@
       "category": "复杂",
       "id": "custom_1784197002536_5krhnu",
       "createdAt": 1784197002536
+    },
+    {
+      "chinese": "急躁",
+      "pinyin": "jízào",
+      "english": "nóng vội, hấp tấp, dễ mất bình tĩnh",
+      "example": "遇到问题时，不要太急躁。\nYùdào wèntí shí, bú yào tài jízào.",
+      "category": "复杂",
+      "id": "custom_1784197127991_l3b0cc",
+      "createdAt": 1784197127991
     }
   ],
   "chinese_favorites": [],
