@@ -80,6 +80,15 @@
       "category": "简单",
       "id": "custom_1784196910908_w8mj2c",
       "createdAt": 1784196910908
+    },
+    {
+      "chinese": "粗心",
+      "pinyin": "cūxīn",
+      "english": "bất cẩn",
+      "example": "他太粗心了，经常忘记带钥匙。\nTā tài cūxīn le, jīngcháng wàngjì dài yàoshi",
+      "category": "复杂",
+      "id": "custom_1784197002536_5krhnu",
+      "createdAt": 1784197002536
     }
   ],
   "chinese_favorites": [],
