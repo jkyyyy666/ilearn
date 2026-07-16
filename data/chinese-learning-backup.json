@@ -44,6 +44,15 @@
       "category": "简单",
       "id": "custom_1784102681547_3o2r2z",
       "createdAt": 1784102681547
+    },
+    {
+      "chinese": "性格",
+      "pinyin": "xìnggé",
+      "english": "tính cách",
+      "example": "我的性格比较安静。\nWǒ de xìnggé bǐjiào ānjìng.",
+      "category": "常用",
+      "id": "custom_1784196559938_wx9w0z",
+      "createdAt": 1784196559938
     }
   ],
   "chinese_favorites": [],
@@ -62,7 +71,8 @@
   ],
   "cl_streak_dates": [
     "2026-07-14",
-    "2026-07-15"
+    "2026-07-15",
+    "2026-07-16"
   ],
   "cl_daily_goal": 15
 }
