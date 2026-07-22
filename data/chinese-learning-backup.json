@@ -161,6 +161,15 @@
       "category": "复杂",
       "id": "custom_1784708500487_kfa8vl",
       "createdAt": 1784708500487
+    },
+    {
+      "chinese": "表示",
+      "pinyin": "biǎoshì",
+      "english": "biểu thị; bày tỏ; tỏ ý; ngỏ lời; tỏ vẻ",
+      "example": "他向我表示感谢\ntā xiàng wǒ biǎoshì gǎnxiè",
+      "category": "常用",
+      "id": "custom_1784708591560_3smv3c",
+      "createdAt": 1784708591560
     }
   ],
   "chinese_favorites": [],
