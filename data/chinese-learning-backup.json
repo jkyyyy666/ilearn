@@ -152,6 +152,15 @@
       "category": "复杂",
       "id": "custom_1784708431484_4xsyrc",
       "createdAt": 1784708431485
+    },
+    {
+      "chinese": "加固",
+      "pinyin": "jiāgù",
+      "english": "gia cố; củng cố; tăng cường",
+      "example": "我们加固了房屋\nwǒmen jiāgù le fángwū",
+      "category": "复杂",
+      "id": "custom_1784708500487_kfa8vl",
+      "createdAt": 1784708500487
     }
   ],
   "chinese_favorites": [],
