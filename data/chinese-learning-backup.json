@@ -143,6 +143,15 @@
       "category": "复杂",
       "id": "custom_1784708355600_qsza5m",
       "createdAt": 1784708355600
+    },
+    {
+      "chinese": "童年",
+      "pinyin": "tóngnián",
+      "english": "thời thơ ấu; tuổi thơ ấu; thời niên thiếu",
+      "example": "我的童年很快乐。\nWǒ de tóngnián hěn kuàilè.",
+      "category": "复杂",
+      "id": "custom_1784708431484_4xsyrc",
+      "createdAt": 1784708431485
     }
   ],
   "chinese_favorites": [],
