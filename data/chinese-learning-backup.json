@@ -125,6 +125,15 @@
       "category": "复杂",
       "id": "custom_1784707390180_vxsbag",
       "createdAt": 1784707390180
+    },
+    {
+      "chinese": "走访",
+      "pinyin": "zǒufǎng",
+      "english": "thăm viếng; thăm hỏi; phỏng vấn",
+      "example": "我想走访一下这位作家\nwǒ xiǎng zǒufǎng yīxià zhè wèi zuòjiā.",
+      "category": "复杂",
+      "id": "custom_1784707510872_82idoy",
+      "createdAt": 1784707510872
     }
   ],
   "chinese_favorites": [],
