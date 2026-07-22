@@ -134,6 +134,15 @@
       "category": "复杂",
       "id": "custom_1784707510872_82idoy",
       "createdAt": 1784707510872
+    },
+    {
+      "chinese": "谈及",
+      "pinyin": "tán jí",
+      "english": "nhắc đến, nói đến",
+      "example": "他谈及了童年的回忆\nTā tán jí le tóng nián de huí yì",
+      "category": "复杂",
+      "id": "custom_1784708355600_qsza5m",
+      "createdAt": 1784708355600
     }
   ],
   "chinese_favorites": [],
