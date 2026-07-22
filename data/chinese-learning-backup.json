@@ -116,6 +116,15 @@
       "category": "自定义",
       "id": "custom_1784206263382_nqp06r",
       "createdAt": 1784206263382
+    },
+    {
+      "chinese": "干部",
+      "pinyin": "gànbù",
+      "english": "cán bộ; công nhân viên chức",
+      "example": "他们是优秀的干部\ntāmen shì yōuxiù de gànbù.",
+      "category": "复杂",
+      "id": "custom_1784707390180_vxsbag",
+      "createdAt": 1784707390180
     }
   ],
   "chinese_favorites": [],
@@ -135,7 +144,8 @@
   "cl_streak_dates": [
     "2026-07-14",
     "2026-07-15",
-    "2026-07-16"
+    "2026-07-16",
+    "2026-07-22"
   ],
   "cl_daily_goal": 15
 }
