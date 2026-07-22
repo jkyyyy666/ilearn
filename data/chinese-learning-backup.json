@@ -170,6 +170,15 @@
       "category": "常用",
       "id": "custom_1784708591560_3smv3c",
       "createdAt": 1784708591560
+    },
+    {
+      "chinese": "改造",
+      "pinyin": "gǎizào",
+      "english": "cải tạo; sửa sang",
+      "example": "他决定改造旧房子\ntā juédìng gǎizào jiù fángz",
+      "category": "复杂",
+      "id": "custom_1784708778096_pdrtvg",
+      "createdAt": 1784708778096
     }
   ],
   "chinese_favorites": [],
